@@ -143,13 +143,14 @@ class Character
 		}
 		void updateProjectiles()
 		{
-			for(int i=0;i<activeProjectiles.size();++i)
+			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
 				if(!activeProjectiles[i]->update())
 				{
-					delete activeProjectiles[i];
-					activeProjectiles.erase(activeProjectiles.begin() + i);
-					i -= 1;
+					Projectile *tempProj = activeProjectiles[i];
+					activeProjectiles[i] = activeProjectiles.back();
+					activeProjectiles.pop_back();
+					delete tempProj;
 				}
 			}
 		}
