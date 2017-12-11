@@ -13,8 +13,8 @@ Mat imgg = imread(IMAGE,0);
 Mat imgv(img.rows,img.cols,CV_8UC1,Scalar(0));
 const int fov = 90;
 const int step = 4;
-const int pStep = 20;
-const int spread = 4;
+const int pStep = 12;
+const int spread = 10;
 
 template <class T>
 bool isValid(T y, T x)
@@ -38,7 +38,7 @@ void castRay(Point source, float theta, int type)
 	{
 		if(imgv.at<uchar>(y,x) == 0)
 		{
-			r = 1 + sqrt(pow(x-source.x,2)+pow(y-source.y,2))/40;
+			r = 1 + sqrt(pow(x-source.x,2)+pow(y-source.y,2))/100;
 			if(imgg.at<uchar>(y,x) < 128)
 			{
 				if(type == 0)
@@ -218,7 +218,7 @@ int main()
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
-	while(p.keyInput(waitKey(50)))
+	while(p.keyInput(waitKey(20)))
 	{
 		p.draw();
 		p.updateProjectiles();
