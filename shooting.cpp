@@ -225,12 +225,20 @@ Player p;
 
 void upImg(int event, int x, int y, int flags, void* a)
 {
-	Point pLoc = p.getLocation();
-	float angle = atan2(y - pLoc.y, x - pLoc.x);
-	p.setAim(angle);
-	if(event == EVENT_LBUTTONDOWN)
+	if(event == EVENT_MOUSEMOVE)
+	{
+		Point pLoc = p.getLocation();
+		float angle = atan2(y - pLoc.y, x - pLoc.x);
+		p.setAim(angle);
+	}
+	else if(event == EVENT_LBUTTONDOWN)
+	{
 		p.shoot();
-	p.draw();
+		p.draw();
+		p.updateProjectiles();
+	}
+	else
+		p.draw();
 }
 
 int main()
@@ -238,7 +246,7 @@ int main()
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
-	while(p.keyInput(waitKey(20)))
+	while(p.keyInput(waitKey(1)))
 	{
 		p.draw();
 		p.updateProjectiles();
