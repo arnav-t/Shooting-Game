@@ -15,6 +15,10 @@ const int fov = 90;
 const int step = 4;
 const int pStep = 12;
 const int spread = 10;
+const double fireRate = 0.5;
+const int bPadding = 2;
+Point rBarCorner(20,575);
+Size rBarSize(100,15);
 
 template <class T>
 bool isValid(T y, T x)
@@ -81,7 +85,6 @@ class Projectile
 			imgv = Scalar(0);
 			for(float i = 0; i < 360; i+=0.1)
 				castRay(location,i,3);
-			//circle(img, location, 4, Scalar(0,200,255),CV_FILLED);
 			imshow("Game", img);
 		}
 		void draw()
@@ -223,6 +226,8 @@ class Player : public Character
 };
 
 Player p;
+clock_t prevFire;
+double timeSinceFire = 0;
 
 void upImg(int event, int x, int y, int flags, void* a)
 {
@@ -232,14 +237,20 @@ void upImg(int event, int x, int y, int flags, void* a)
 		float angle = atan2(y - pLoc.y, x - pLoc.x);
 		p.setAim(angle);
 	}
-	else if(event == EVENT_LBUTTONDOWN)
+	else if(event == EVENT_LBUTTONDOWN && timeSinceFire >= fireRate)
 	{
+		prevFire = clock();
 		p.shoot();
 		p.draw();
 		p.updateProjectiles();
 	}
-	else
-		p.draw();
+}
+
+void drawRechargeRect()
+{
+	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
+	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.d,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
+	imshow("Game",img);
 }
 
 int main()
@@ -247,10 +258,13 @@ int main()
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
+	prevFire = clock();
 	while(p.keyInput(waitKey(1)))
 	{
+		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		p.draw();
 		p.updateProjectiles();
+		drawRechargeRect();
 	}
 	return 0;
 }
