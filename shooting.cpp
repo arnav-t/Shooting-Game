@@ -47,6 +47,11 @@ void castRay(Point source, float theta, int type)
 					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 63/pow(r,2)));
 				if(type == 2)
 					img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 255/pow(r,2)));
+				if(type == 3)
+				{
+					img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 200/pow(r,2)));
+					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
+				}
 			}
 			else
 				break;
@@ -62,11 +67,22 @@ class Projectile
 	private:
 		int aim;
 		Point location;
+		float pStepX, pStepY;
 	public:
 		Projectile(Point l, int a)
 		{
 			location = l;
 			aim = a;
+			pStepX = pStep*cos(aim*CV_PI/180);
+			pStepY = pStep*sin(aim*CV_PI/180);
+		}
+		~Projectile()
+		{
+			imgv = Scalar(0);
+			for(float i = 0; i < 360; i+=0.1)
+				castRay(location,i,3);
+			//circle(img, location, 4, Scalar(0,200,255),CV_FILLED);
+			imshow("Game", img);
 		}
 		void draw()
 		{
@@ -78,15 +94,19 @@ class Projectile
 		}
 		bool update()
 		{
-			location.x += pStep*cos(aim*CV_PI/180);
-			location.y += pStep*sin(aim*CV_PI/180);
+			location.x += pStepX;
+			location.y += pStepY;
 			if(isValid(location.y,location.x) && imgg.at<uchar>(location.y,location.x) < 128)
 			{
 				draw();
 				return true;
 			}
 			else 
+			{
+				location.x -= pStepX;
+				location.y -= pStepY;
 				return false;
+			}
 		}
 };
 
