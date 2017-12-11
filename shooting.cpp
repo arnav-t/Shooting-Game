@@ -13,7 +13,8 @@ Mat imgg = imread(IMAGE,0);
 Mat imgv(img.rows,img.cols,CV_8UC1,Scalar(0));
 const int fov = 90;
 const int step = 4;
-const int pStep = 10;
+const int pStep = 20;
+const int spread = 4;
 
 template <class T>
 bool isValid(T y, T x)
@@ -41,11 +42,11 @@ void castRay(Point source, float theta, int type)
 			if(imgg.at<uchar>(y,x) < 128)
 			{
 				if(type == 0)
-					img.at<Vec3b>(y,x)[1] += 255/pow(r,2);
+					img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 255/pow(r,2)));
 				if(type == 1)
-					img.at<Vec3b>(y,x)[2] += 63/pow(r,2);
+					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 63/pow(r,2)));
 				if(type == 2)
-					img.at<Vec3b>(y,x)[0] += 255/pow(r,2);
+					img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 255/pow(r,2)));
 			}
 			else
 				break;
@@ -79,7 +80,7 @@ class Projectile
 		{
 			location.x += pStep*cos(aim*CV_PI/180);
 			location.y += pStep*sin(aim*CV_PI/180);
-			if(isValid(location.y,location.x))
+			if(isValid(location.y,location.x) && imgg.at<uchar>(location.y,location.x) < 128)
 			{
 				draw();
 				return true;
@@ -117,8 +118,20 @@ class Character
 		}
 		void shoot()
 		{
-			Projectile *newProjectile = new Projectile(location,aim);
+			Projectile *newProjectile = new Projectile(location,aim + rand()%spread*pow(-1,rand()));
 			activeProjectiles.push_back(newProjectile);
+		}
+		void updateProjectiles()
+		{
+			for(int i=0;i<activeProjectiles.size();++i)
+			{
+				if(!activeProjectiles[i]->update())
+				{
+					delete activeProjectiles[i];
+					activeProjectiles.erase(activeProjectiles.begin() + i);
+					i -= 1;
+				}
+			}
 		}
 };
 
@@ -195,6 +208,8 @@ void upImg(int event, int x, int y, int flags, void* a)
 	Point pLoc = p.getLocation();
 	float angle = atan2(y - pLoc.y, x - pLoc.x);
 	p.setAim(angle);
+	if(event == EVENT_LBUTTONDOWN)
+		p.shoot();
 	p.draw();
 }
 
@@ -205,7 +220,8 @@ int main()
 	setMouseCallback("Game", upImg, NULL);
 	while(p.keyInput(waitKey(50)))
 	{
-		
+		p.draw();
+		p.updateProjectiles();
 	}
 	return 0;
 }
