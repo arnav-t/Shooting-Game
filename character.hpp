@@ -17,7 +17,6 @@ class Character
 		void draw()
 		{
 			imgv = Scalar(0);
-			img = imread(IMAGE,1);
 			for(float t = aim - fov/2; t <= aim + fov/2;t+=0.1)
 				castRay(location,t,type);
 			if(type == 0)

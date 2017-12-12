@@ -1,5 +1,5 @@
 #include <iostream>
-#include "player.hpp"
+#include "ai.hpp"
 
 Player *p;
 clock_t prevFire;
@@ -16,8 +16,6 @@ void upImg(int event, int x, int y, int flags, void* a)
 	{
 		prevFire = clock();
 		p->shoot();
-		p->draw();
-		p->updateProjectiles();
 	}
 }
 
@@ -25,12 +23,15 @@ int main()
 {
 	p = new Player;
 	activeChars.push_back(p);
+	for(int i=0; i<aiPlayers; ++i)
+		activeChars.push_back(new AI);
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
 	prevFire = clock();
 	while(p->keyInput(waitKey(1)))
 	{
+		img = imread(IMAGE,1);
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=0;i<activeChars.size();++i)
 		{
