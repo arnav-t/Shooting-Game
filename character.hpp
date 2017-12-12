@@ -3,6 +3,7 @@
 
 const int fov = 90;
 const int spread = 10;
+const int hitDamage = 10;
 
 class Character
 {
@@ -48,4 +49,10 @@ class Character
 				}
 			}
 		}
+		void damage()
+		{
+			health -= hitDamage;
+		}
 };
+
+vector<Character *> activeChars;

@@ -7,4 +7,3 @@ class AI : public Character
 		
 };
 
-vector<Character *> activeChars;
