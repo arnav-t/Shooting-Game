@@ -31,10 +31,22 @@ class Projectile
 			circle(img, location, 4, Scalar(255,0,0),CV_FILLED);
 			imshow("Game",img);
 		}
-		bool update()
+		template <class T>
+		bool update(vector<T> charVec)
 		{
 			location.x += pStepX;
 			location.y += pStepY;
+			for(int i=0; i<charVec.size();++i)
+			{
+				Point charLoc = charVec[i]->getLocation();
+				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 10)
+				{
+					charVec[i]->damage();
+					location.x -= pStepX;
+					location.y -= pStepY;
+					return false;
+				}
+			}
 			if(isValid(location.y,location.x) && imgg.at<uchar>(location.y,location.x) < 128)
 			{
 				draw();

@@ -3,6 +3,7 @@
 
 const int fov = 90;
 const int spread = 10;
+const int hitDamage = 10;
 
 class Character
 {
@@ -16,7 +17,6 @@ class Character
 		void draw()
 		{
 			imgv = Scalar(0);
-			img = imread(IMAGE,1);
 			for(float t = aim - fov/2; t <= aim + fov/2;t+=0.1)
 				castRay(location,t,type);
 			if(type == 0)
@@ -30,16 +30,21 @@ class Character
 		{
 			return location;
 		}
+		void setAim(float theta)
+		{
+			aim = 180*theta/CV_PI;
+		}
 		void shoot()
 		{
 			Projectile *newProjectile = new Projectile(location, aim + (rand()%spread)*pow(-1,rand()));
 			activeProjectiles.push_back(newProjectile);
 		}
-		void updateProjectiles()
+		template <class T>
+		void updateProjectiles(vector<T> charVec)
 		{
 			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
-				if(!activeProjectiles[i]->update())
+				if(!activeProjectiles[i]->update(charVec))
 				{
 					Projectile *tempProj = activeProjectiles[i];
 					activeProjectiles[i] = activeProjectiles.back();
@@ -48,4 +53,21 @@ class Character
 				}
 			}
 		}
+		void damage()
+		{
+			health -= hitDamage;
+			circle(img, location, 4, Scalar(153,255,255), CV_FILLED);
+			imshow("Game",img);
+			waitKey(1);
+		}
+		virtual void think() 
+		{
+			return;
+		}
+		virtual int checkLife()
+		{
+			return true;
+		}
 };
+
+vector<Character *> activeChars;

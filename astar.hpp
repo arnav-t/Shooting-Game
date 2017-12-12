@@ -1,0 +1,111 @@
+#include "player.hpp"
+#include <stack>
+#include <queue>
+
+const int greed = 50;
+const int deltaStep = 4;
+
+Point aimPoint;
+
+class Node
+{
+	private:
+		Point location;
+		Node *parent;
+		int weight;
+	public:
+		Node(Point l = Point(0,0), Node *p = nullptr)
+		{
+			location = l;
+			weight = 0;
+			setParent(p);
+		}
+		int getHeuristicWeight() const
+		{
+			return greed*(abs(aimPoint.x - location.x) + abs(aimPoint.y - location.y)) + weight;
+		}
+		Point getLocation() const
+		{
+			return location;
+		}
+		int getWeight() const
+		{
+			return weight;
+		}
+		void setParent(Node *p)
+		{
+			parent = p;
+			if(parent == nullptr)
+				weight = 0;
+			else if((parent->getLocation().x - location.x) && (parent->getLocation().y - location.y))
+				weight = 14 + parent->getWeight();
+			else
+				weight = 10 + parent->getWeight();
+		}
+		void addToStack(stack<Point> &s)
+		{
+			s.push(location); 
+			if(parent != nullptr)
+			{
+				parent->addToStack(s);
+			}
+		}
+};
+
+inline bool operator<(const Node &l, const Node &r) 
+{
+    return l.getHeuristicWeight() > r.getHeuristicWeight();
+}
+
+priority_queue<Node, vector<Node>> open;
+
+void aStar(Node n, stack<Point> &s)
+{
+	if(!open.empty())
+		open.pop();
+	int y = n.getLocation().y;
+	int x = n.getLocation().x;
+	if(!isValid(y,x))
+		return;
+	if(imgg.at<uchar>(y,x) >= 128 || imgv.at<uchar>(y,x) >= 128)
+		return;
+	imgv.at<uchar>(y,x) = 255;
+	if(abs(y - aimPoint.y) + abs(x - aimPoint.x) <= 5*deltaStep)
+	{
+		n.addToStack(s);
+		while(!open.empty())
+			open.pop();
+		return;
+	}
+	for(int j=-deltaStep; j<=deltaStep; j+=deltaStep)
+	{
+		for(int i=-deltaStep; i<=deltaStep; i+=deltaStep)
+		{
+			if(j || i)
+				if(isValid(y+j,x+i))
+					if(imgv.at<uchar>(y+j,x+i) < 128 && imgg.at<uchar>(y+j,x+i) < 128)
+					{
+						Node *newNode = new Node(Point(x+i,y+j), &n);
+						if(newNode != nullptr)
+							open.push(*newNode);
+					}
+		}
+	}
+	if(!open.empty())
+		aStar(open.top(), s);
+}
+
+void getPath(Point start, Point finish, stack<Point> &path)
+{
+	imgv = Scalar(0);
+	while(!open.empty())
+		open.pop();
+	while(!path.empty())
+		path.pop();
+	if(abs(start.x - finish.x) + abs(start.y - finish.y) <= 5*deltaStep)
+		return;
+	aimPoint = finish;
+	Node *startNode = new Node(start);
+	open.push(*startNode);
+	aStar(*startNode, path);
+}
