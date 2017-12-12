@@ -32,10 +32,11 @@ class Player : public Character
 				return 0;
 			if(keyCode == 100)
 			{
-				if(isValid(location.y,location.x + step + 4))
-					if(imgg.at<uchar>(location.y,location.x + step + 4) < 128)
+				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
+					if(imgg.at<uchar>(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)) < 128)
 					{
-						location.x += step;
+						location.x -= step*sin(aim*CV_PI/180);
+						location.y += step*cos(aim*CV_PI/180);
 						draw();
 					}
 			}
@@ -51,10 +52,11 @@ class Player : public Character
 			}
 			else if(keyCode == 97)
 			{
-				if(isValid(location.y,location.x - step - 4))
-					if(imgg.at<uchar>(location.y,location.x - step - 4) < 128)
+				if(isValid(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)))
+					if(imgg.at<uchar>(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)) < 128)
 					{
-						location.x -= step;
+						location.x += step*sin(aim*CV_PI/180);
+						location.y -= step*cos(aim*CV_PI/180);
 						draw();
 					}
 			}
