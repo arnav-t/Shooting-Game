@@ -39,12 +39,17 @@ int main()
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
-			if(!activeChars[i]->checkLife())
+			if(activeChars[i]->checkLife() == 0)
 			{
 				Character *tempChar = activeChars[i];
 				activeChars[i] = activeChars.back();
 				activeChars.pop_back();
 				delete tempChar;
+			}
+			else if(activeChars[i]->checkLife() == 2)
+			{
+				activeChars[i] = activeChars.back();
+				activeChars.pop_back();
 			}
 			else
 			{

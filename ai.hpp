@@ -16,12 +16,14 @@ class AI : public Character
 		void setTarget()
 		{
 			if(activeChars.size())
-				target = activeChars[0];
-			for(int i=1;i<activeChars.size();++i)
+				target = nullptr;
+			for(int i=0;i<activeChars.size();++i)
 			{
 				if(activeChars[i]->getLocation() != location)
 				{
-					if(abs(location.x - activeChars[i]->getLocation().x) + abs(location.y - activeChars[i]->getLocation().y) < 
+					if(target == nullptr)
+						target = activeChars[i];
+					else if(abs(location.x - activeChars[i]->getLocation().x) + abs(location.y - activeChars[i]->getLocation().y) < 
 						abs(location.x - target->getLocation().x) + abs(location.y - target->getLocation().y))
 						target = activeChars[i];
 				}

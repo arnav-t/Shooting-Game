@@ -79,7 +79,7 @@ class Player : public Character
 		}
 		int checkLife()
 		{
-			return 1;
+			return health > 0 ? 1:2;
 		}
 };
 
