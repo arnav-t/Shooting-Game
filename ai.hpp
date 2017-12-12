@@ -3,6 +3,7 @@
 const int aiPlayers = 2;
 const float aiMoveRate = 0.03;
 const float aiUpdateRate = 0.8;
+const int shootThreshold = 100;
 
 class AI : public Character
 {
@@ -10,6 +11,7 @@ class AI : public Character
 		Character *target;
 		clock_t prevUpdate;
 		clock_t prevMove;
+		clock_t prevFire;
 		stack<Point> path;
 		void setTarget()
 		{
@@ -25,6 +27,10 @@ class AI : public Character
 				}
 			}
 		}
+		bool checkLoS(float y, float x)
+		{
+			
+		}
 	public:
 		AI()
 		{
@@ -33,24 +39,41 @@ class AI : public Character
 			aim = rand()%360;
 			prevUpdate = clock();
 			prevMove = clock();
+			prevFire = clock();
 			location = Point(rand()%img.cols,rand()%img.rows);
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
+			target = nullptr;
 			draw();
+		}
+		~AI()
+		{
+			imgv = Scalar(0);
+			for(float t = 0; t < 360; t+=0.1)
+				castRay(location,t,3);
+			imshow("Game", img);
 		}
 		void think()
 		{
-			
-			if(!path.empty())
+			if((double)(clock() - prevMove)/CLOCKS_PER_SEC >= aiMoveRate)
 			{
-				if((double)(clock() - prevMove)/CLOCKS_PER_SEC >= aiMoveRate)
+				if(!path.empty())
 				{
 					if(isValid(path.top().y,path.top().x))
 						location = path.top();
 					path.pop();
-					prevMove = clock();
 				}
+				prevMove = clock();
 			} 
+			if((double)(clock() - prevFire)/CLOCKS_PER_SEC >= fireRate)
+			{
+				if(target != nullptr)	
+					if(abs(target->getLocation().x - location.x) + abs(target->getLocation().y - location.y) <= shootThreshold)
+					{	
+						shoot();
+						prevFire = clock();
+					}
+			}
 			if((double)(clock() - prevUpdate)/CLOCKS_PER_SEC >= aiUpdateRate)
 			{	
 				setTarget();
@@ -61,6 +84,10 @@ class AI : public Character
 				}
 				prevUpdate = clock();
 			}
+		}
+		int checkLife()
+		{
+			return health > 0 ? 1:0;
 		}
 };
 

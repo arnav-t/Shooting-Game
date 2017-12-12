@@ -72,6 +72,10 @@ class Player : public Character
 		{
 			return;
 		}
+		int checkLife()
+		{
+			return 1;
+		}
 };
 
 double timeSinceFire = 0.0;

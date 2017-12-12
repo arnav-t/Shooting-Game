@@ -33,11 +33,21 @@ int main()
 	{
 		img = imread(IMAGE,1);
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
-		for(int i=0;i<activeChars.size();++i)
+		for(int i=activeChars.size()-1;i>=0;--i)
 		{
-			activeChars[i]->think();
-			activeChars[i]->draw();
-			activeChars[i]->updateProjectiles(activeChars);
+			if(!activeChars[i]->checkLife())
+			{
+				Character *tempChar = activeChars[i];
+				activeChars[i] = activeChars.back();
+				activeChars.pop_back();
+				delete tempChar;
+			}
+			else
+			{
+				activeChars[i]->think();
+				activeChars[i]->draw();
+				activeChars[i]->updateProjectiles(activeChars);
+			}
 		}
 		drawRechargeRect();
 	}

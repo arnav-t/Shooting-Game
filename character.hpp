@@ -64,6 +64,10 @@ class Character
 		{
 			return;
 		}
+		virtual int checkLife()
+		{
+			return true;
+		}
 };
 
 vector<Character *> activeChars;
