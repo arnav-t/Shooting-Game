@@ -1,8 +1,8 @@
 #include "astar.hpp"
 
-const int aiPlayers = 2;
-const float aiMoveRate = 0.05;
-const float aiUpdateRate = 2;
+const int aiPlayers = 4;
+const float aiMoveRate = 0.02;
+const float aiUpdateRate = 0.5;
 
 class AI : public Character
 {
@@ -10,11 +10,12 @@ class AI : public Character
 		Character *target;
 		clock_t prevUpdate;
 		clock_t prevMove;
+		stack<Point> path;
 		void setTarget()
 		{
 			if(activeChars.size())
 				target = activeChars[0];
-			for(int i=0;i<activeChars.size();++i)
+			for(int i=1;i<activeChars.size();++i)
 			{
 				if(activeChars[i]->getLocation() != location)
 				{
@@ -24,7 +25,6 @@ class AI : public Character
 				}
 			}
 		}
-		stack<Point> path;
 	public:
 		AI()
 		{
@@ -40,11 +40,13 @@ class AI : public Character
 		}
 		void think()
 		{
+			
 			if(!path.empty())
 			{
 				if((double)(clock() - prevMove)/CLOCKS_PER_SEC >= aiMoveRate)
 				{
-					location = path.top();
+					if(isValid(path.top().y,path.top().x))
+						location = path.top();
 					path.pop();
 					prevMove = clock();
 				}
@@ -52,8 +54,11 @@ class AI : public Character
 			if((double)(clock() - prevUpdate)/CLOCKS_PER_SEC >= aiUpdateRate)
 			{	
 				setTarget();
-				getPath(location, target->getLocation(), path);
-				setAim(atan2(target->getLocation().y - location.y, target->getLocation().x - location.x));
+				if(target != nullptr)
+				{
+					getPath(location, target->getLocation(), path);
+					setAim(atan2(target->getLocation().y - location.y, target->getLocation().x - location.x));
+				}
 				prevUpdate = clock();
 			}
 		}

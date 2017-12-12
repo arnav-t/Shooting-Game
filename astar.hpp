@@ -3,15 +3,9 @@
 #include <queue>
 
 const int greed = 50;
-const int delta = 5;
+const int deltaStep = 3;
 
-void roundToDelta(Point &a)
-{
-	a.x -= a.x%delta;
-	a.y -= a.y%delta;
-}
-
-Point aim;
+Point aimPoint;
 
 class Node
 {
@@ -28,7 +22,7 @@ class Node
 		}
 		int getHeuristicWeight() const
 		{
-			return greed*(abs(aim.x - location.x) + abs(aim.y - location.y)) + weight;
+			return greed*(abs(aimPoint.x - location.x) + abs(aimPoint.y - location.y)) + weight;
 		}
 		Point getLocation() const
 		{
@@ -43,7 +37,7 @@ class Node
 			parent = p;
 			if(parent == nullptr)
 				weight = 0;
-			else if((parent->getLocation() - location).x && (parent->getLocation() - location).y)
+			else if((parent->getLocation().x - location.x) && (parent->getLocation().y - location.y))
 				weight = 14 + parent->getWeight();
 			else
 				weight = 10 + parent->getWeight();
@@ -72,24 +66,29 @@ void aStar(Node n, stack<Point> &s)
 		open.pop();
 	int y = n.getLocation().y;
 	int x = n.getLocation().x;
+	if(!isValid(y,x))
+		return;
+	if(imgg.at<uchar>(y,x) >= 128 || imgv.at<uchar>(y,x) >= 128)
+		return;
 	imgv.at<uchar>(y,x) = 255;
-	if(abs(y - aim.y) + abs(x - aim.x) <= 5*delta)
+	if(abs(y - aimPoint.y) + abs(x - aimPoint.x) <= 5*deltaStep)
 	{
 		n.addToStack(s);
 		while(!open.empty())
 			open.pop();
 		return;
 	}
-	for(int j=-delta; j<=delta; j+=delta)
+	for(int j=-deltaStep; j<=deltaStep; j+=deltaStep)
 	{
-		for(int i=-delta; i<=delta; i+=delta)
+		for(int i=-deltaStep; i<=deltaStep; i+=deltaStep)
 		{
-			if(j && i)
+			if(j || i)
 				if(isValid(y+j,x+i))
 					if(imgv.at<uchar>(y+j,x+i) < 128 && imgg.at<uchar>(y+j,x+i) < 128)
 					{
 						Node *newNode = new Node(Point(x+i,y+j), &n);
-						open.push(*newNode);
+						if(newNode != nullptr)
+							open.push(*newNode);
 					}
 		}
 	}
@@ -104,12 +103,10 @@ void getPath(Point start, Point finish, stack<Point> &path)
 		open.pop();
 	while(!path.empty())
 		path.pop();
-	roundToDelta(start);
-	roundToDelta(finish);
-	if(abs(start.x - finish.x) + abs(start.y - finish.y) <= 2*delta)
+	if(abs(start.x - finish.x) + abs(start.y - finish.y) <= 5*deltaStep)
 		return;
-	aim = finish;
-	Node *init = new Node(start);
-	open.push(*init);
-	aStar(*init, path);
+	aimPoint = finish;
+	Node *startNode = new Node(start);
+	open.push(*startNode);
+	aStar(*startNode, path);
 }
