@@ -3,7 +3,7 @@
 #include <queue>
 
 const int greed = 50;
-const int deltaStep = 3;
+const int deltaStep = 4;
 
 Point aimPoint;
 
@@ -47,7 +47,6 @@ class Node
 			s.push(location); 
 			if(parent != nullptr)
 			{
-				line(img, location, parent->getLocation(), Scalar(0,0,255), 1, CV_AA);
 				parent->addToStack(s);
 			}
 		}

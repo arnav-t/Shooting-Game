@@ -1,8 +1,8 @@
 #include "astar.hpp"
 
-const int aiPlayers = 4;
-const float aiMoveRate = 0.02;
-const float aiUpdateRate = 0.5;
+const int aiPlayers = 2;
+const float aiMoveRate = 0.03;
+const float aiUpdateRate = 0.8;
 
 class AI : public Character
 {
