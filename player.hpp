@@ -22,10 +22,6 @@ class Player : public Character
 				location = Point(rand()%img.cols,rand()%img.rows);
 			draw();
 		}
-		void setAim(float theta)
-		{
-			aim = 180*theta/CV_PI;
-		}
 		int keyInput(int keyCode)
 		{
 			if(keyCode == 27)

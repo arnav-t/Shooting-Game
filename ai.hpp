@@ -7,6 +7,20 @@ class AI : public Character
 	private:
 		Character *target;
 		clock_t prevFire;
+		void setTarget()
+		{
+			if(activeChars.size())
+				target = activeChars[0];
+			for(int i=0;i<activeChars.size();++i)
+			{
+				if(activeChars[i]->getLocation() != location)
+				{
+					if(abs(location.x - activeChars[i]->getLocation().x) + abs(location.y - activeChars[i]->getLocation().y) < 
+						abs(location.x - target->getLocation().x) + abs(location.y - target->getLocation().y))
+						target = activeChars[i];
+				}
+			}
+		}
 	public:
 		AI()
 		{
@@ -23,7 +37,8 @@ class AI : public Character
 		{
 			if((double)(clock() - prevFire)/CLOCKS_PER_SEC >= fireRate)
 			{	
-				//shoot();
+				setTarget();
+				setAim(atan2(target->getLocation().y - location.y, target->getLocation().x - location.x));
 				prevFire = clock();
 			}
 		}

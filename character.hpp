@@ -30,6 +30,10 @@ class Character
 		{
 			return location;
 		}
+		void setAim(float theta)
+		{
+			aim = 180*theta/CV_PI;
+		}
 		void shoot()
 		{
 			Projectile *newProjectile = new Projectile(location, aim + (rand()%spread)*pow(-1,rand()));
