@@ -12,6 +12,10 @@ void upImg(int event, int x, int y, int flags, void* a)
 		float angle = atan2(y - pLoc.y, x - pLoc.x);
 		p->setAim(angle);
 	}
+	else if(event == EVENT_RBUTTONDOWN)
+		p->setKeyState(true);
+	else if(event == EVENT_RBUTTONUP)
+		p->setKeyState(false);
 	else if(event == EVENT_LBUTTONDOWN && timeSinceFire >= fireRate)
 	{
 		prevFire = clock();

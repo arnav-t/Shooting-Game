@@ -9,7 +9,7 @@ Size rBarSize(100,15);
 class Player : public Character
 {
 	private:
-	
+		bool rKeyDown;
 	public:
 		Player()
 		{
@@ -17,10 +17,15 @@ class Player : public Character
 			type = 0;
 			health = 100;
 			aim = rand()%360;
+			rKeyDown = false;
 			location = Point(rand()%img.cols,rand()%img.rows);
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
 			draw();
+		}
+		bool setKeyState(bool state)
+		{
+			rKeyDown = state;
 		}
 		int keyInput(int keyCode)
 		{
@@ -36,7 +41,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 119)
+			else if(keyCode == 119 || rKeyDown)
 			{
 				if(isValid(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)) < 128)
