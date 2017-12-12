@@ -2,7 +2,7 @@
 #include <stack>
 #include <queue>
 
-const int greed = 50;
+const int greed = 100;
 const int deltaStep = 4;
 
 Point aimPoint;
@@ -61,14 +61,20 @@ priority_queue<Node, vector<Node>> open;
 
 void aStar(Node n, stack<Point> &s)
 {
-	if(!open.empty())
-		open.pop();
 	int y = n.getLocation().y;
 	int x = n.getLocation().x;
+	if(!open.empty())
+		open.pop();
 	if(!isValid(y,x))
+	{
+		aStar(open.top(), s);
 		return;
+	}
 	if(imgg.at<uchar>(y,x) >= 128 || imgv.at<uchar>(y,x) >= 128)
+	{
+		aStar(open.top(), s);
 		return;
+	}
 	imgv.at<uchar>(y,x) = 255;
 	if(abs(y - aimPoint.y) + abs(x - aimPoint.x) <= 5*deltaStep)
 	{
@@ -83,7 +89,7 @@ void aStar(Node n, stack<Point> &s)
 		{
 			if(j || i)
 				if(isValid(y+j,x+i))
-					if(imgv.at<uchar>(y+j,x+i) < 128 && imgg.at<uchar>(y+j,x+i) < 128)
+					if((imgv.at<uchar>(y+j,x+i) == 0) && (imgg.at<uchar>(y+j,x+i) < 128))
 					{
 						Node *newNode = new Node(Point(x+i,y+j), &n);
 						if(newNode != nullptr)
