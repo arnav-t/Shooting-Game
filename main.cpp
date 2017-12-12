@@ -35,8 +35,9 @@ int main()
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=0;i<activeChars.size();++i)
 		{
+			activeChars[i]->think();
 			activeChars[i]->draw();
-			activeChars[i]->updateProjectiles();
+			activeChars[i]->updateProjectiles(activeChars);
 		}
 		drawRechargeRect();
 	}

@@ -35,11 +35,12 @@ class Character
 			Projectile *newProjectile = new Projectile(location, aim + (rand()%spread)*pow(-1,rand()));
 			activeProjectiles.push_back(newProjectile);
 		}
-		void updateProjectiles()
+		template <class T>
+		void updateProjectiles(vector<T> charVec)
 		{
 			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
-				if(!activeProjectiles[i]->update())
+				if(!activeProjectiles[i]->update(charVec))
 				{
 					Projectile *tempProj = activeProjectiles[i];
 					activeProjectiles[i] = activeProjectiles.back();
@@ -51,6 +52,13 @@ class Character
 		void damage()
 		{
 			health -= hitDamage;
+			circle(img, location, 4, Scalar(153,255,255), CV_FILLED);
+			imshow("Game",img);
+			waitKey(1);
+		}
+		virtual void think() 
+		{
+			return;
 		}
 };
 

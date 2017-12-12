@@ -72,6 +72,10 @@ class Player : public Character
 			}
 			return 1;
 		}
+		void think() 
+		{
+			return;
+		}
 };
 
 double timeSinceFire = 0.0;
