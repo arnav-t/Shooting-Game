@@ -5,7 +5,7 @@ Basic top down 2D shooter game in C++ and OpenCV
 ### Setup
 1. `sudo apt install libopencv-dev`
 2. `git clone https://github.com/arnav-t/Shooting-Game.git`
-### Compiling and runnning
+### Compiling and running
 1. `cd Shooting-Game`
 2. `make`
 3. `./ShootingGame`
