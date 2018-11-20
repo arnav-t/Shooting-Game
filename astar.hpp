@@ -7,59 +7,64 @@ const int deltaStep = 4;
 
 Point aimPoint;
 
-class Node
+namespace astar
 {
-	private:
-		Point location;
-		Node *parent;
-		int weight;
-	public:
-		Node(Point l = Point(0,0), Node *p = nullptr)
-		{
-			location = l;
-			weight = 0;
-			setParent(p);
-		}
-		int getHeuristicWeight() const
-		{
-			return greed*(abs(aimPoint.x - location.x) + abs(aimPoint.y - location.y)) + weight;
-		}
-		Point getLocation() const
-		{
-			return location;
-		}
-		int getWeight() const
-		{
-			return weight;
-		}
-		void setParent(Node *p)
-		{
-			parent = p;
-			if(parent == nullptr)
-				weight = 0;
-			else if((parent->getLocation().x - location.x) && (parent->getLocation().y - location.y))
-				weight = 14 + parent->getWeight();
-			else
-				weight = 10 + parent->getWeight();
-		}
-		void addToStack(stack<Point> &s)
-		{
-			s.push(location); 
-			if(parent != nullptr)
+	class Node
+	{
+		private:
+			Point location;
+			Node *parent;
+			int weight;
+		public:
+			Node(Point l = Point(0,0), Node *p = nullptr)
 			{
-				parent->addToStack(s);
+				location = l;
+				weight = 0;
+				setParent(p);
 			}
-		}
-};
+			int getHeuristicWeight() const
+			{
+				return greed*(abs(aimPoint.x - location.x) + abs(aimPoint.y - location.y)) + weight;
+			}
+			Point getLocation() const
+			{
+				return location;
+			}
+			int getWeight() const
+			{
+				return weight;
+			}
+			void setParent(astar::Node *p)
+			{
+				parent = p;
+				if(parent == nullptr)
+					weight = 0;
+				else if((parent->getLocation().x - location.x) && (parent->getLocation().y - location.y))
+					weight = 14 + parent->getWeight();
+				else
+					weight = 10 + parent->getWeight();
+			}
+			void addToStack(stack<Point> &s)
+			{
+				s.push(location); 
+				if(parent != nullptr)
+				{
+					parent->addToStack(s);
+				}
+			}
+	};
 
-inline bool operator<(const Node &l, const Node &r) 
-{
-    return l.getHeuristicWeight() > r.getHeuristicWeight();
+	inline bool operator<(const Node &l, const Node &r) 
+	{
+	    return l.getHeuristicWeight() > r.getHeuristicWeight();
+	}
+
 }
 
-priority_queue<Node, vector<Node>> open;
 
-void aStar(Node n, stack<Point> &s)
+priority_queue<astar::Node, vector<astar::Node>> open;
+
+void aStar(astar::Node n, stack<Point> &s)
 {
 	int y = n.getLocation().y;
 	int x = n.getLocation().x;
@@ -91,7 +96,7 @@ void aStar(Node n, stack<Point> &s)
 				if(isValid(y+j,x+i))
 					if((imgv.at<uchar>(y+j,x+i) == 0) && (imgg.at<uchar>(y+j,x+i) < 128))
 					{
-						Node *newNode = new Node(Point(x+i,y+j), &n);
+						astar::Node *newNode = new astar::Node(Point(x+i,y+j), &n);
 						if(newNode != nullptr)
 							open.push(*newNode);
 					}
@@ -111,7 +116,7 @@ void getPath(Point start, Point finish, stack<Point> &path)
 	if(abs(start.x - finish.x) + abs(start.y - finish.y) <= 5*deltaStep)
 		return;
 	aimPoint = finish;
-	Node *startNode = new Node(start);
+	astar::Node *startNode = new astar::Node(start);
 	open.push(*startNode);
 	aStar(*startNode, path);
 }
