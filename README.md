@@ -1,4 +1,7 @@
 # Shooting-Game (Ball Sacker)
+![C++](https://img.shields.io/badge/Made%20with-C%2B%2B-red.svg) 
+![Gitter](https://img.shields.io/gitter/room/:user/:repo.svg)
+         
 Basic top down 2D shooter game in C++ and OpenCV        
 ![screenshot](https://i.imgur.com/KUYuibB.png "in-game screenshot")
 ## Ubuntu
@@ -12,3 +15,5 @@ Basic top down 2D shooter game in C++ and OpenCV
 ## Windows
 1. Install Ubuntu. :-P
 2. See above. 
+## Communication
+[Gitter](https://gitter.im/BallSackerChat/Lobby)
