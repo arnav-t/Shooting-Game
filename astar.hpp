@@ -16,7 +16,7 @@ namespace astar
 			Node *parent;
 			int weight;
 		public:
-			Node(Point l = Point(0,0), Node *p = nullptr)
+			Node(Point l = Point(0,0), Node *p = NULL)
 			{
 				location = l;
 				weight = 0;
@@ -37,7 +37,7 @@ namespace astar
 			void setParent(astar::Node *p)
 			{
 				parent = p;
-				if(parent == nullptr)
+				if(parent == NULL)
 					weight = 0;
 				else if((parent->getLocation().x - location.x) && (parent->getLocation().y - location.y))
 					weight = 14 + parent->getWeight();
@@ -47,7 +47,7 @@ namespace astar
 			void addToStack(stack<Point> &s)
 			{
 				s.push(location); 
-				if(parent != nullptr)
+				if(parent != NULL)
 				{
 					parent->addToStack(s);
 				}
@@ -62,7 +62,7 @@ namespace astar
 }
 
 
-priority_queue<astar::Node, vector<astar::Node>> open;
+priority_queue<astar::Node, vector<astar::Node> > open;
 
 void aStar(astar::Node n, stack<Point> &s)
 {
@@ -97,7 +97,7 @@ void aStar(astar::Node n, stack<Point> &s)
 					if((imgv.at<uchar>(y+j,x+i) == 0) && (imgg.at<uchar>(y+j,x+i) < 128))
 					{
 						astar::Node *newNode = new astar::Node(Point(x+i,y+j), &n);
-						if(newNode != nullptr)
+						if(newNode != NULL)
 							open.push(*newNode);
 					}
 		}
