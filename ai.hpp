@@ -16,12 +16,12 @@ class AI : public Character
 		void setTarget()
 		{
 			if(activeChars.size())
-				target = nullptr;
+				target = NULL;
 			for(int i=0;i<activeChars.size();++i)
 			{
 				if(activeChars[i]->getLocation() != location)
 				{
-					if(target == nullptr)
+					if(target == NULL)
 						target = activeChars[i];
 					else if(abs(location.x - activeChars[i]->getLocation().x) + abs(location.y - activeChars[i]->getLocation().y) < 
 						abs(location.x - target->getLocation().x) + abs(location.y - target->getLocation().y))
@@ -45,7 +45,7 @@ class AI : public Character
 			location = Point(rand()%img.cols,rand()%img.rows);
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
-			target = nullptr;
+			target = NULL;
 			draw();
 		}
 		~AI()
@@ -69,7 +69,7 @@ class AI : public Character
 			} 
 			if((double)(clock() - prevFire)/CLOCKS_PER_SEC >= fireRate)
 			{
-				if(target != nullptr)	
+				if(target != NULL)	
 					if(abs(target->getLocation().x - location.x) + abs(target->getLocation().y - location.y) <= shootThreshold)
 					{	
 						shoot();
@@ -79,7 +79,7 @@ class AI : public Character
 			if((double)(clock() - prevUpdate)/CLOCKS_PER_SEC >= aiUpdateRate)
 			{	
 				setTarget();
-				if(target != nullptr)
+				if(target != NULL)
 				{
 					getPath(location, target->getLocation(), path);
 					setAim(atan2(target->getLocation().y - location.y, target->getLocation().x - location.x));
