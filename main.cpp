@@ -3,6 +3,7 @@
 
 Player *p;
 clock_t prevFire;
+clock_t start;
 
 void upImg(int event, int x, int y, int flags, void* a)
 {
@@ -23,17 +24,32 @@ void upImg(int event, int x, int y, int flags, void* a)
 	}
 }
 
+double checkDelay(clock_t *start_ref)
+{
+	clock_t now = clock();
+	double delay = double(now- (*start_ref))/CLOCKS_PER_SEC;
+	delay *= 1000;
+	(*start_ref) = now;
+
+	if(delay >= 16)
+		return 1;
+	else
+		return (ceil((double)16 - delay));
+}
+
 int main()
 {
 	p = new Player;
 	activeChars.push_back(p);
+	start = clock();
 	for(int i=0; i<aiPlayers; ++i)
 		activeChars.push_back(new AI);
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
 	prevFire = clock();
-	while(p->keyInput(waitKey(1))&&!escpressed)
+	double delay = 1;
+	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
@@ -59,6 +75,7 @@ int main()
 			}
 		}
 		drawRechargeRect();
+		delay = checkDelay(&start);
 	}
 	return 0;
 }
