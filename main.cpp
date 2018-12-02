@@ -59,6 +59,7 @@ int main()
 			}
 		}
 		drawRechargeRect();
+		drawHealthRect(p);
 	}
 	return 0;
 }
