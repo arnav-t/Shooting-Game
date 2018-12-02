@@ -1,6 +1,5 @@
 sudo: required
 install:
-	- sudo apt-get install libopencv-dev
-
+ - sudo apt-get install libopencv-dev
 script:
-	- make legacy=true
+ - make legacy=true
