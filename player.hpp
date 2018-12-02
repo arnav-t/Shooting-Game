@@ -91,7 +91,7 @@ double timeSinceFire = 0.0;
 void drawRechargeRect()
 {
 	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
-	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.d,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
+	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
 	imshow("Game",img);
 }
 	void drawHealthRect(Player * p)
