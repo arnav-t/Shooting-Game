@@ -4,6 +4,7 @@ const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
 Point rBarCorner(20,575);
+Point hBarCorner(480,575);
 Size rBarSize(100,15);
 
 class Player : public Character
@@ -81,6 +82,8 @@ class Player : public Character
 		{
 			return health > 0 ? 1:2;
 		}
+		friend void drawHealthRect(Player* p);
+
 };
 
 double timeSinceFire = 0.0;
@@ -88,7 +91,16 @@ double timeSinceFire = 0.0;
 void drawRechargeRect()
 {
 	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
-	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.d,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
+	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
 	imshow("Game",img);
 }
+	void drawHealthRect(Player * p)
+		{	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);//outerborder
+	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(0,255,0), CV_FILLED);
+	
+	imshow("Game",img);
+		}
+
+
+
 

@@ -75,6 +75,7 @@ int main()
 			}
 		}
 		drawRechargeRect();
+    drawHealthRect(p);
 		delay = checkDelay(&start);
 	}
 	return 0;
