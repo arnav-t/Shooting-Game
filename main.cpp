@@ -33,7 +33,7 @@ int main()
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
 	prevFire = clock();
-	while(p->keyInput(waitKey(1))&&!escpressed)
+	while(p->keyInput(waitKey(9))&&!escpressed)
 	{
 		img = imread(IMAGE,1);
 		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
