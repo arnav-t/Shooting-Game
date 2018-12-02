@@ -1,5 +1,5 @@
 #include "character.hpp"
-
+int escpressed=0;
 const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
@@ -30,7 +30,7 @@ class Player : public Character
 		int keyInput(int keyCode)
 		{
 			if(keyCode == 27)
-				return 0;
+				escpressed=1;
 			if(keyCode == 100)
 			{
 				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
