@@ -1,4 +1,4 @@
-# Shooting-Game (Ball Sacker)
+# Shooting-Game (Ball Sacker) [![Build Status](https://travis-ci.org/arnav-t/Shooting-Game.svg?branch=master)](https://travis-ci.org/arnav-t/Shooting-Game)
 ![C++](https://img.shields.io/badge/Made%20with-C%2B%2B-red.svg) 
 ![Gitter](https://img.shields.io/gitter/room/:user/:repo.svg) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
 
