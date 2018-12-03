@@ -20,10 +20,10 @@ class Character
 			for(float t = aim - fov/2; t <= aim + fov/2;t+=0.1)
 				castRay(location,t,type);
 			if(type == 0)
-				circle(img, location, 4, Scalar(0,255,0),CV_FILLED);
+				circle(img, location, 7, Scalar(0,255,0),CV_FILLED);
 			else if(type == 1)
-				circle(img, location, 4, Scalar(0,0,255),CV_FILLED);
-			circle(img, location, 4, Scalar(0,0,0), 1);
+				circle(img, location, 7, Scalar(0,0,255),CV_FILLED);
+			circle(img, location, 7, Scalar(0,0,0), 1);
 			imshow("Game",img);
 		}
 		Point getLocation()
@@ -40,11 +40,11 @@ class Character
 			activeProjectiles.push_back(newProjectile);
 		}
 		template <class T>
-		void updateProjectiles(vector<T> charVec)
+		void updateProjectiles(vector<T> charVec, int creater)
 		{
 			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
-				if(!activeProjectiles[i]->update(charVec))
+				if(!activeProjectiles[i]->update(charVec, creater))
 				{
 					Projectile *tempProj = activeProjectiles[i];
 					activeProjectiles[i] = activeProjectiles.back();
@@ -56,7 +56,7 @@ class Character
 		void damage()
 		{
 			health -= hitDamage;
-			circle(img, location, 4, Scalar(153,255,255), CV_FILLED);
+			circle(img, location, 7, Scalar(153,255,255), CV_FILLED);
 			imshow("Game",img);
 			waitKey(1);
 		}

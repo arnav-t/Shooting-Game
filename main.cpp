@@ -73,12 +73,12 @@ int main()
 			{
 				activeChars[i]->think();
 				activeChars[i]->draw();
-				activeChars[i]->updateProjectiles(activeChars);
+				activeChars[i]->updateProjectiles(activeChars, i);
 			}
 		}
 
 		drawRechargeRect();
-    drawHealthRect(p);
+    	drawHealthRect(p);
 		delay = checkDelay(&start);
 	}
 	return 0;
