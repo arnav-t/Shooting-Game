@@ -20,10 +20,10 @@ class Character
 			for(float t = aim - fov/2; t <= aim + fov/2;t+=0.1)
 				castRay(location,t,type);
 			if(type == 0)
-				circle(img, location, 4, Scalar(0,255,0),CV_FILLED);
+				circle(img, location, 7, Scalar(0,255,0),CV_FILLED);
 			else if(type == 1)
-				circle(img, location, 4, Scalar(0,0,255),CV_FILLED);
-			circle(img, location, 4, Scalar(0,0,0), 1);
+				circle(img, location, 7, Scalar(0,0,255),CV_FILLED);
+			circle(img, location, 7, Scalar(0,0,0), 1);
 			imshow("Game",img);
 		}
 		Point getLocation()
