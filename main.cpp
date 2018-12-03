@@ -53,7 +53,7 @@ int main()
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
-		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
+		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
 			if(activeChars[i]->checkLife() == 0)
@@ -76,7 +76,7 @@ int main()
 				activeChars[i]->updateProjectiles(activeChars);
 			}
 		}
-		if(!dead)
+
 		drawRechargeRect();
     drawHealthRect(p);
 		delay = checkDelay(&start);
