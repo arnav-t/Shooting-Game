@@ -40,6 +40,7 @@ double checkDelay(clock_t *start_ref)
 int main()
 {
 	p = new Player;
+	int dead=0;
 	activeChars.push_back(p);
 	start = clock();
 	for(int i=0; i<aiPlayers; ++i)
@@ -66,6 +67,7 @@ int main()
 			{
 				activeChars[i] = activeChars.back();
 				activeChars.pop_back();
+				dead=1;
 			}
 			else
 			{
@@ -74,6 +76,7 @@ int main()
 				activeChars[i]->updateProjectiles(activeChars);
 			}
 		}
+		if(!dead)
 		drawRechargeRect();
     drawHealthRect(p);
 		delay = checkDelay(&start);
