@@ -32,14 +32,19 @@ class Projectile
 			imshow("Game",img);
 		}
 		template <class T>
-		bool update(vector<T> charVec)
+		bool update(vector<T> charVec, int creater)
 		{
 			location.x += pStepX;
 			location.y += pStepY;
 			for(int i=0; i<charVec.size();++i)
 			{
+				if(i == creater)
+				{
+					continue;
+				}
+
 				Point charLoc = charVec[i]->getLocation();
-				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 10)
+				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
 				{
 					charVec[i]->damage();
 					location.x -= pStepX;
