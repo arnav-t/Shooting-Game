@@ -40,6 +40,7 @@ double checkDelay(clock_t *start_ref)
 int main()
 {
 	p = new Player;
+	int dead=0;
 	activeChars.push_back(p);
 	start = clock();
 	for(int i=0; i<aiPlayers; ++i)
@@ -52,7 +53,7 @@ int main()
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
-		timeSinceFire = (double)(clock() - prevFire)/CLOCKS_PER_SEC;
+		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
 			if(activeChars[i]->checkLife() == 0)
@@ -66,6 +67,7 @@ int main()
 			{
 				activeChars[i] = activeChars.back();
 				activeChars.pop_back();
+				dead=1;
 			}
 			else
 			{
@@ -74,6 +76,7 @@ int main()
 				activeChars[i]->updateProjectiles(activeChars);
 			}
 		}
+
 		drawRechargeRect();
     drawHealthRect(p);
 		delay = checkDelay(&start);
