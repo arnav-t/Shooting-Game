@@ -46,8 +46,11 @@ class Projectile
 				Point charLoc = charVec[i]->getLocation();
 				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
 
-				{
-					 continue;
+				{       charvec[creater]->givepoints()
+					 charVec[i]->damage();
+					location.x -= pStepX;
+					location.y -= pStepY;
+                                         return false;
 				}
 				
 			}
