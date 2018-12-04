@@ -11,6 +11,7 @@ class Character
 		int type;
 		int health;
 		int aim;
+	        int score;
 		Point location;
 		vector<Projectile *> activeProjectiles;
 	public:
@@ -44,7 +45,9 @@ class Character
 		{
 			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
+
 				if(!activeProjectiles[i]->update(charVec, creater))
+
 				{
 					Projectile *tempProj = activeProjectiles[i];
 					activeProjectiles[i] = activeProjectiles.back();
@@ -67,6 +70,10 @@ class Character
 		virtual int checkLife()
 		{
 			return true;
+		}
+	        virtual void givepoints()
+		{ 
+			return;
 		}
 };
 
