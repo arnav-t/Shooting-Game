@@ -37,7 +37,7 @@ class Projectile
 			location.x += pStepX;
 			location.y += pStepY;
 			for(int i=0; i<charVec.size();++i)
-
+			{
 				if(i == creater)
 				{
 					continue;
