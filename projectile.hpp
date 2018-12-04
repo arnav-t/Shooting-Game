@@ -28,7 +28,7 @@ class Projectile
 			imgv = Scalar(0);
 			for(float t = 0; t < 360; t+=0.1)
 				castRay(location,t,2);
-			circle(img, location, 4, Scalar(255,0,0),CV_FILLED);
+			circle(img, location, 7, Scalar(255,0,0),CV_FILLED);
 			imshow("Game",img);
 		}
 		template <class T>
