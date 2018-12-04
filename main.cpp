@@ -55,6 +55,7 @@ int main()
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
+		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
 
 		double alpha = 0.5;
@@ -85,7 +86,9 @@ int main()
 			{
 				activeChars[i]->think();
 				activeChars[i]->draw();
-				activeChars[i]->updateProjectiles(activeChars, i);
+
+				activeChars[i]->updateProjectiles(activeChars,i);
+
 			}
 		}
 
