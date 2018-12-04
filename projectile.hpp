@@ -49,14 +49,7 @@ class Projectile
 				{
 					 continue;
 				}
-				Point charLoc = charVec[i]->getLocation();
-				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
-				{       charVec[creater]->givepoints();
-					charVec[i]->damage();
-					location.x -= pStepX;
-					location.y -= pStepY;
-					return false;
-				}
+				
 			}
 			if(isValid(location.y,location.x) && imgg.at<uchar>(location.y,location.x) < 128)
 			{
