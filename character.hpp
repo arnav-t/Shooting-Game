@@ -57,7 +57,7 @@ class Character
 		void damage()
 		{
 			health -= hitDamage;
-			circle(img, location, 4, Scalar(153,255,255), CV_FILLED);
+			circle(img, location, 7, Scalar(153,255,255), CV_FILLED);
 			imshow("Game",img);
 			waitKey(1);
 		}
