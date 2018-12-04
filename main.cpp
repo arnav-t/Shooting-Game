@@ -74,7 +74,7 @@ int main()
 			{
 				activeChars[i]->think();
 				activeChars[i]->draw();
-				activeChars[i]->updateProjectiles(activeChars);
+				activeChars[i]->updateProjectiles(activeChars,i);
 			}
 		}
 
