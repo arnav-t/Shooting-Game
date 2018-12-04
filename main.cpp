@@ -50,11 +50,23 @@ int main()
 	setMouseCallback("Game", upImg, NULL);
 	prevFire = clock();
 	double delay = 1;
+	Mat trans = img;
+	trans.setTo(Scalar(0, 0, 0));
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
 		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
+
+		double alpha = 0.5;
+		double beta = (double)1 - alpha;
+		if(dead == 1)
+		{
+			addWeighted(img, alpha, trans, beta, 0.0, img);
+			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
+			putText(img, "You Lose", Point(90, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
+		}
+
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
 			if(activeChars[i]->checkLife() == 0)
@@ -74,12 +86,23 @@ int main()
 			{
 				activeChars[i]->think();
 				activeChars[i]->draw();
+
 				activeChars[i]->updateProjectiles(activeChars,i);
+
 			}
 		}
 
 		drawRechargeRect();
-    drawHealthRect(p);
+    	drawHealthRect(p);
+	
+		if(dead == 0 && activeChars.size() == 1)
+		{
+			addWeighted(img, alpha, trans, beta, 0.0, img);
+			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
+			putText(img, "You Win", Point(100, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);	
+		}
+		imshow("Game", img);
+
 		delay = checkDelay(&start);
 	}
 	return 0;

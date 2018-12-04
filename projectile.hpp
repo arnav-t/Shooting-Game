@@ -37,8 +37,15 @@ class Projectile
 			location.x += pStepX;
 			location.y += pStepY;
 			for(int i=0; i<charVec.size();++i)
-			{       
-				if(i==creater)
+
+				if(i == creater)
+				{
+					continue;
+				}
+
+				Point charLoc = charVec[i]->getLocation();
+				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
+
 				{
 					 continue;
 				}

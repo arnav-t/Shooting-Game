@@ -45,7 +45,9 @@ class Character
 		{
 			for(int i=activeProjectiles.size()-1;i>=0;--i)
 			{
+
 				if(!activeProjectiles[i]->update(charVec,creater))
+
 				{
 					Projectile *tempProj = activeProjectiles[i];
 					activeProjectiles[i] = activeProjectiles.back();

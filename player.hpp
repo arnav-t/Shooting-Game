@@ -99,11 +99,12 @@ void drawRechargeRect()
 	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
 	imshow("Game",img);
 }
-	void drawHealthRect(Player * p)
-		{	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);//outerborder
+void drawHealthRect(Player * p)
+{	
+	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);//outerborder
 	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(0,255,0), CV_FILLED);
-	
 	imshow("Game",img);
+
 		}
  void printscore(Player* p)
  { ostringstream a;
@@ -113,7 +114,9 @@ void drawRechargeRect()
   
    putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
   
- }
+
+}
+
 
 
 
