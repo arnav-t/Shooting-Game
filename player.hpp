@@ -13,7 +13,7 @@ class Player : public Character
 		bool rKeyDown;
 	public:
 		Player()
-		{
+		{       score=0;
 			srand(time(NULL));
 			type = 0;
 			health = 100;
@@ -82,7 +82,12 @@ class Player : public Character
 		{
 			return health > 0 ? 1:2;
 		}
+		void givepoints()
+		{
+		  score+=15;
+		}
 		friend void drawHealthRect(Player* p);
+		friend void printscore(Player* p);
 
 };
 
@@ -100,6 +105,15 @@ void drawRechargeRect()
 	
 	imshow("Game",img);
 		}
+ void printscore(Player* p)
+ { ostringstream a;
+   a<<p->score;
+  string s=a.str();
+   s="SCORE :"+s;
+  
+   putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
+  
+ }
 
 
 
