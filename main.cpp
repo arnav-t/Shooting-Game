@@ -53,7 +53,10 @@ int main()
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{
+	{        if(pause==1)
+	    {putText(img, "pause", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
+	     continue;
+	    }
 		img = imread(IMAGE,1);
 		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
