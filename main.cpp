@@ -53,7 +53,13 @@ int main()
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{        if(pause==1)
+	{        if(start_==0)
+	    {img = imread(IMAGE,1);
+	     putText(img, "press s", Point(50, 300), FONT_HERSHEY_SIMPLEX, 4, Scalar(0,255, 255), 10, 2);
+	     imshow("Game", img);
+	     continue;
+	    }
+		if(pause==1)
 	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
 	     imshow("Game", img);
 	     continue;
