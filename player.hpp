@@ -1,6 +1,7 @@
 #include "character.hpp"
 int escpressed=0;
 int pause=0;
+int start_=0;
 const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
@@ -37,6 +38,9 @@ class Player : public Character
 			    { pause+=1;
 			     pause%=2;	
 			     }	
+			if (keyCode==115)
+			 {start_=1;
+			 }
 			if(keyCode == 100&&!pause)
 			{
 				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
