@@ -11,6 +11,7 @@ class Character
 		int type;
 		int health;
 		int aim;
+	        int score;
 		Point location;
 		vector<Projectile *> activeProjectiles;
 	public:
@@ -67,6 +68,10 @@ class Character
 		virtual int checkLife()
 		{
 			return true;
+		}
+	        virtual void givepoints()
+		{   
+		     return;
 		}
 };
 
