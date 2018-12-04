@@ -53,6 +53,7 @@ int main()
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{
 		img = imread(IMAGE,1);
+		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
