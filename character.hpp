@@ -61,7 +61,12 @@ class Character
 			if(type == 1)
 				health -= hitDamage;
 			else
-				health -= 5;
+				health -= 7;
+
+			if(health < 0)
+			{
+				health = 0;
+			}
 			circle(img, location, 7, Scalar(153,255,255), CV_FILLED);
 			imshow("Game",img);
 			waitKey(1);
