@@ -1,5 +1,6 @@
 #include "character.hpp"
 int escpressed=0;
+int pause=0;
 const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
@@ -32,7 +33,11 @@ class Player : public Character
 		{
 			if(keyCode == 27)
 				escpressed=1;
-			if(keyCode == 100)
+			if(keyCode==112)
+			    { pause+=1;
+			     pause%=2;	
+			     }	
+			if(keyCode == 100&&!pause)
 			{
 				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)) < 128)
@@ -42,7 +47,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 119 || rKeyDown)
+			else if((keyCode == 119 || rKeyDown)&&!pause)
 			{
 				if(isValid(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)) < 128)
@@ -52,7 +57,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 97)
+			else if(keyCode == 97&&!pause)
 			{
 				if(isValid(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)) < 128)
@@ -62,7 +67,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 115)
+			else if(keyCode == 115&&!pause)
 			{
 				if(isValid(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)) < 128)

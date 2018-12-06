@@ -37,12 +37,17 @@ double checkDelay(clock_t *start_ref)
 		return (ceil((double)16 - delay));
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	p = new Player;
 	int dead=0;
 	activeChars.push_back(p);
 	start = clock();
+	if(argc == 2)
+	{
+		stringstream inp(argv[1]);
+		inp>>aiPlayers;
+	}
 	for(int i=0; i<aiPlayers; ++i)
 		activeChars.push_back(new AI);
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);
@@ -53,7 +58,11 @@ int main()
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{
+	{        if(pause==1)
+	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
+	     imshow("Game", img);
+	     continue;
+	    }
 		img = imread(IMAGE,1);
 		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
