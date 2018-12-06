@@ -4,6 +4,7 @@
 const int fov = 90;
 const int spread = 10;
 const int hitDamage = 10;
+const int hitDamagePlayer = 7;
 
 class Character
 {
@@ -58,7 +59,15 @@ class Character
 		}
 		void damage()
 		{
-			health -= hitDamage;
+			if(type == 1)
+				health -= hitDamage;
+			else
+				health -= hitDamagePlayer;
+
+			if(health < 0)
+			{
+				health = 0;
+			}
 			circle(img, location, 7, Scalar(153,255,255), CV_FILLED);
 			imshow("Game",img);
 			waitKey(1);
