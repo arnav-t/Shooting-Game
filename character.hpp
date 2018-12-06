@@ -58,7 +58,10 @@ class Character
 		}
 		void damage()
 		{
-			health -= hitDamage;
+			if(type == 1)
+				health -= hitDamage;
+			else
+				health -= 5;
 			circle(img, location, 7, Scalar(153,255,255), CV_FILLED);
 			imshow("Game",img);
 			waitKey(1);
