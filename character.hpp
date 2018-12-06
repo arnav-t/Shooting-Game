@@ -4,6 +4,7 @@
 const int fov = 90;
 const int spread = 10;
 const int hitDamage = 10;
+const int hitDamagePlayer = 7;
 
 class Character
 {
@@ -61,7 +62,7 @@ class Character
 			if(type == 1)
 				health -= hitDamage;
 			else
-				health -= 7;
+				health -= hitDamagePlayer;
 
 			if(health < 0)
 			{
