@@ -37,12 +37,17 @@ double checkDelay(clock_t *start_ref)
 		return (ceil((double)16 - delay));
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	p = new Player;
 	int dead=0;
 	activeChars.push_back(p);
 	start = clock();
+	if(argc == 2)
+	{
+		stringstream inp(argv[1]);
+		inp>>aiPlayers;
+	}
 	for(int i=0; i<aiPlayers; ++i)
 		activeChars.push_back(new AI);
 	namedWindow("Game",CV_WINDOW_AUTOSIZE);

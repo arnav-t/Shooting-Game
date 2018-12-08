@@ -1,6 +1,6 @@
 #include "astar.hpp"
 
-const int aiPlayers = 4;
+int aiPlayers = 4;
 const float aiMoveRate = 0.03;
 const float aiUpdateRate = 0.8;
 const int shootThreshold = 100;
