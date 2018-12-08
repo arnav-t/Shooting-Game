@@ -1,7 +1,6 @@
 #include "character.hpp"
 int escpressed=0;
 int pause=0;
-int start_=0;
 const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
