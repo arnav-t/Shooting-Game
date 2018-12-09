@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	}
 	for(int i=0; i<aiPlayers; ++i)
 		activeChars.push_back(new AI);
-	namedWindow("Game",CV_WINDOW_AUTOSIZE);
+	namedWindow("Game",CV_WINDOW_AUTOSIZE|CV_GUI_NORMAL);
 	imshow("Game",img);
 	setMouseCallback("Game", upImg, NULL);
 	prevFire = clock();
@@ -103,12 +103,12 @@ int main(int argc, char *argv[])
 
 		drawRechargeRect();
     	drawHealthRect(p);
-	
+
 		if(dead == 0 && activeChars.size() == 1)
 		{
 			addWeighted(img, alpha, trans, beta, 0.0, img);
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
-			putText(img, "You Win", Point(100, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);	
+			putText(img, "You Win", Point(100, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
 		}
 		imshow("Game", img);
 
@@ -116,5 +116,3 @@ int main(int argc, char *argv[])
 	}
 	return 0;
 }
-
-
