@@ -100,26 +100,29 @@ double timeSinceFire = 0.0;
 
 void drawRechargeRect()
 {
+	// Border
 	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
 	cvtColor(img, img,CV_BGR2HSV);
-	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(min(1.0,(double)timeSinceFire/fireRate)*60,255,255), CV_FILLED);
+	// Change hue from 360 deg to 240 deg
+	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(180 - min(1.0,(double)timeSinceFire/fireRate)*60,255,255), CV_FILLED);
+	
+	// cvtColor(img, img,CV_HSV2BGR); // Would be called in drawHealthRect()
+	// imshow("Game",img); // Would be called in drawHealthRect()
+}
+void drawHealthRect(Player *p)
+{
+	// Border
+	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(0,0,255), 1);
+	// Change hue from 0 deg to 120 deg
+	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(min(1.0,(double)(p->health)/100)*60,255,255), CV_FILLED);
 	cvtColor(img, img,CV_HSV2BGR);
 	imshow("Game",img);
 }
-void drawHealthRect(Player * p)
+void printscore(Player *p)
 {
-	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);//outerborder
-	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(0,255,0), CV_FILLED);
-	imshow("Game",img);
-
-		}
- void printscore(Player* p)
- { ostringstream a;
-   a<<p->score;
-  string s=a.str();
-   s="SCORE :"+s;
-
-   putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
-
-
+	ostringstream a;
+	a << p->score;
+	string s = a.str();
+	s = "SCORE: " + s;
+	putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
 }
