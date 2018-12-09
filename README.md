@@ -8,7 +8,10 @@ All contributions are welcome.
 - Please feel free to open new issues for bugs or feature requests.
 - Please try to include a screenshot with the pull request if any visual changes are made to the game.   
 - Drop a message on the [Gitter channel](https://gitter.im/BallSackerChat/Lobby) if you have any questions.
-![screenshot](https://i.imgur.com/PsQek5r.png "in-game screenshot")
+![screenshot](https://i.imgur.com/xn2JYAl.png "in-game screenshot")
+![screenshot](https://i.imgur.com/RSuMXvr.png "in-game screenshot")
+![screenshot](https://i.imgur.com/Mx8jdTV.png "in-game screenshot")
+![screenshot](https://i.imgur.com/eX8IDys.png "in-game screenshot")
 ## Ubuntu
 ### Setup
 1. `sudo apt install libopencv-dev`
