@@ -4,7 +4,8 @@
 Player *p;
 clock_t prevFire;
 clock_t start;
-
+int health_pickuptaken=0;
+Point health_location;
 void upImg(int event, int x, int y, int flags, void* a)
 {
 	if(event == EVENT_MOUSEMOVE)
@@ -37,6 +38,18 @@ double checkDelay(clock_t *start_ref)
 		return (ceil((double)16 - delay));
 }
 
+void displayhealthpickup(Point location,Player *p)
+{ if(abs(p->getLocation().x-location.x)+abs(p->getLocation().y-location.y)<=15)
+  {p->healthboost();
+  health_pickuptaken=1;
+  imshow("Game", img);
+  }
+  else
+  {rectangle(img,location,Point(location.x+10,location.y+10),Scalar(255,0,255),CV_FILLED);
+  imshow("Game", img);
+  }
+}
+
 int main(int argc, char *argv[])
 {
 	p = new Player;
@@ -57,6 +70,9 @@ int main(int argc, char *argv[])
 	double delay = 1;
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
+	health_location = Point(rand()%img.cols,rand()%img.rows);
+    while(imgg.at<uchar>(health_location.y,health_location.x) >= 128)
+				health_location = Point(rand()%img.cols,rand()%img.rows);
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
 	{        if(pause==1)
 	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
@@ -74,6 +90,9 @@ int main(int argc, char *argv[])
 			addWeighted(img, alpha, trans, beta, 0.0, img);
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
 			putText(img, "You Lose", Point(90, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
+		}
+		else if(p->gethealth()<=50&&!health_pickuptaken)
+		{displayhealthpickup(health_location,p);
 		}
 
 		for(int i=activeChars.size()-1;i>=0;--i)
