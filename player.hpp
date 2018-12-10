@@ -91,6 +91,14 @@ class Player : public Character
 		{
 		  score+=15;
 		}
+		void healthboost()
+		{
+		  health=100;
+		}
+		int gethealth()
+		{
+		   return health;
+		}
 		friend void drawHealthRect(Player* p);
 		friend void printscore(Player* p);
 

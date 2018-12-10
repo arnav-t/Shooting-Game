@@ -84,6 +84,14 @@ class Character
 		{ 
 			return;
 		}
+		virtual void healthboost()
+		{
+		   return;
+		}
+		virtual int gethealth()
+		{
+		   return 0;
+		}
 };
 
 vector<Character *> activeChars;
