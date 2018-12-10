@@ -45,7 +45,7 @@ void displayhealthpickup(Point location,Player *p)
   imshow("Game", img);
   }
   else
-  {rectangle(img,location,Point(location.x+10,location.y+10),Scalar(255,0,255),CV_FILLED);
+  {rectangle(img,Point(location.x-5,location.y-5),Point(location.x+5,location.y+5),Scalar(255,0,255),CV_FILLED);
   imshow("Game", img);
   }
 }
