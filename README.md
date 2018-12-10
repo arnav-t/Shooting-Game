@@ -8,12 +8,21 @@ All contributions are welcome.
 - Please feel free to open new issues for bugs or feature requests.
 - Please try to include a screenshot with the pull request if any visual changes are made to the game.   
 - Drop a message on the [Gitter channel](https://gitter.im/BallSackerChat/Lobby) if you have any questions.
-![screenshot](https://i.imgur.com/PsQek5r.png "in-game screenshot")
+![screenshot](https://i.imgur.com/xn2JYAl.png "in-game screenshot")
+![screenshot](https://i.imgur.com/RSuMXvr.png "in-game screenshot")
+![screenshot](https://i.imgur.com/Mx8jdTV.png "in-game screenshot")
+![screenshot](https://i.imgur.com/eX8IDys.png "in-game screenshot")
+## :video_game: Controls
+- Aim using mouse. 
+- Move forwards using the right mouse button.
+- Shoot projectiles using the left mouse button.
+- Pause the game by pressing the P key.
+- Exit game by pressing the escape key.
 ## Ubuntu
-### Setup
+### :wrench: Setup
 1. `sudo apt install libopencv-dev`
 2. `git clone https://github.com/arnav-t/Shooting-Game.git`
-### Compiling and running
+### :gear: Compiling and running
 1. `cd Shooting-Game`
 2. `make`
 3. `./ShootingGame [number of AI enemies]`     
@@ -21,5 +30,5 @@ All contributions are welcome.
 ## Windows
 1. Install Ubuntu. :sweat_smile:
 2. See above. 
-## Communication
+## :incoming_envelope: Communication
 [Gitter](https://gitter.im/BallSackerChat/Lobby)
