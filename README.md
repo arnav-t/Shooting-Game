@@ -11,13 +11,14 @@ All contributions are welcome.
 ![screenshot](https://i.imgur.com/xn2JYAl.png "in-game screenshot")
 ![screenshot](https://i.imgur.com/RSuMXvr.png "in-game screenshot")
 ![screenshot](https://i.imgur.com/Mx8jdTV.png "in-game screenshot")
-![screenshot](https://i.imgur.com/eX8IDys.png "in-game screenshot")
+![screenshot](https://i.imgur.com/J3YRC7u.png "in-game screenshot")
 ## :video_game: Controls
 - Aim using mouse. 
 - Move forwards using the right mouse button.
 - Shoot projectiles using the left mouse button.
 - Pause the game by pressing the P key.
 - Exit game by pressing the escape key.
+- Pick up the pink squares (health pickups) to replenish your health.
 ## Ubuntu
 ### :wrench: Setup
 1. `sudo apt install libopencv-dev`
