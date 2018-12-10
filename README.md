@@ -12,7 +12,7 @@ All contributions are welcome.
 ![screenshot](https://i.imgur.com/RSuMXvr.png "in-game screenshot")
 ![screenshot](https://i.imgur.com/Mx8jdTV.png "in-game screenshot")
 ![screenshot](https://i.imgur.com/J3YRC7u.png "in-game screenshot")
-## :video_game: Controls
+## :video_game: Gameplay & Controls
 - Aim using mouse. 
 - Move forwards using the right mouse button.
 - Shoot projectiles using the left mouse button.
