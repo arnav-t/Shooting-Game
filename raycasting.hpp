@@ -46,6 +46,12 @@ void castRay(Point source, float theta, int type)
 					img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 200/pow(r,2)));
 					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
 				}
+				if(type==4)
+				{
+				    img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 200/pow(r,2)));
+					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
+				   
+				}
 			}
 			else
 				break;
