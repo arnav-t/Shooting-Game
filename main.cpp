@@ -46,6 +46,8 @@ void displayhealthpickup(Point location,Player *p)
   }
   else
   {rectangle(img,location,Point(location.x+10,location.y+10),Scalar(255,0,255),CV_FILLED);
+  for(float t = 0; t < 360; t+=0.1)
+				castRay(location,t,4);
   imshow("Game", img);
   }
 }
