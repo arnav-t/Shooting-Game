@@ -121,6 +121,12 @@ int main(int argc, char *argv[])
 				activeChars[i]->updateProjectiles(activeChars,i);
 
 			}
+
+			if(timeSinceFire <= fireRate)
+			{
+				rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(153,255,255), 10);
+				imshow("Game", img);
+			}
 		}
 
 		drawRechargeRect();
