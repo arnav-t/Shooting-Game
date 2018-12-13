@@ -129,6 +129,12 @@ int main(int argc, char *argv[])
 			}
 		}
 
+		if(double(clock() - timeDamage)/CLOCKS_PER_SEC <= 0.25)
+		{
+			rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(153,255,255), 10);
+			imshow("Game", img);
+		}
+
 		drawRechargeRect();
     	drawHealthRect(p);
 
