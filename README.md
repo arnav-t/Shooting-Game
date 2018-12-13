@@ -29,7 +29,7 @@ All contributions are welcome.
 3. `./ShootingGame [number of AI enemies]`     
 *Note: If the argument is omitted, it will default to 4 AI enemies.*
 ## Windows
-1. Install Ubuntu. :sweat_smile:
+1. Install Ubuntu. :sweat_smile: or use Windows Subsystem for Linux(WSL) https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/ (NOT TESTED)
 2. See above. 
 ## :incoming_envelope: Communication
 [Gitter](https://gitter.im/BallSackerChat/Lobby)
