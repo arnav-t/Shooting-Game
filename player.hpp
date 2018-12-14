@@ -106,10 +106,13 @@ class Player : public Character
 
 double timeSinceFire = 0.0;
 
-void drawRechargeRect()
+void drawRechargeRect(double timeSinceFire)
 {
 	// Border
-	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
+	if(timeSinceFire < 0.5)
+		rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(0, 0,255), 1);
+	else
+		rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
 	cvtColor(img, img,CV_BGR2HSV);
 	// Change hue from 360 deg to 240 deg
 	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(180 - min(1.0,(double)timeSinceFire/fireRate)*60,255,255), CV_FILLED);
@@ -117,12 +120,15 @@ void drawRechargeRect()
 	// cvtColor(img, img,CV_HSV2BGR); // Would be called in drawHealthRect()
 	// imshow("Game",img); // Would be called in drawHealthRect()
 }
-void drawHealthRect(Player *p)
+void drawHealthRect(Player *p, double timeSinceDamage)
 {
 	// Border
-	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(0,0,255), 1);
+	if(timeSinceDamage <= 0.5)
+		rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(0, 255, 255), 1);
+	else
+		rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(0, 0, 255), 1);
 	// Change hue from 0 deg to 120 deg
-	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(min(1.0,(double)(p->health)/100)*60,255,255), CV_FILLED);
+	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->gethealth())/100), rBarCorner.y + rBarSize.height), Scalar(min(1.0,(double)(p->gethealth())/100)*60,255,255), CV_FILLED);
 	cvtColor(img, img,CV_HSV2BGR);
 	imshow("Game",img);
 }

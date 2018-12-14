@@ -5,6 +5,7 @@ const int fov = 90;
 const int spread = 10;
 const int hitDamage = 10;
 const int hitDamagePlayer = 7;
+clock_t timeDamage = clock();
 
 class Character
 {
@@ -62,8 +63,10 @@ class Character
 			if(type == 1)
 				health -= hitDamage;
 			else
+			{
 				health -= hitDamagePlayer;
-
+				timeDamage = clock();
+			}
 			if(health < 0)
 			{
 				health = 0;

@@ -123,8 +123,10 @@ int main(int argc, char *argv[])
 			}
 		}
 
-		drawRechargeRect();
-    	drawHealthRect(p);
+		double timeSinceDamage = double(clock() - timeDamage)/CLOCKS_PER_SEC;
+
+		drawRechargeRect(timeSinceFire);
+    	drawHealthRect(p, timeSinceDamage);
 
 		if(dead == 0 && activeChars.size() == 1)
 		{
