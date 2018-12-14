@@ -121,22 +121,12 @@ int main(int argc, char *argv[])
 				activeChars[i]->updateProjectiles(activeChars,i);
 
 			}
-
-			if(timeSinceFire < fireRate)
-			{
-				rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(153,255,255), 10);
-				imshow("Game", img);
-			}
 		}
 
-		if(double(clock() - timeDamage)/CLOCKS_PER_SEC <= 0.25)
-		{
-			rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(153,255,255), 10);
-			imshow("Game", img);
-		}
+		double timeSinceDamage = double(clock() - timeDamage)/CLOCKS_PER_SEC;
 
-		drawRechargeRect();
-    	drawHealthRect(p);
+		drawRechargeRect(timeSinceFire);
+    	drawHealthRect(p, timeSinceDamage);
 
 		if(dead == 0 && activeChars.size() == 1)
 		{
