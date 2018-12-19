@@ -26,8 +26,9 @@ All contributions are welcome.
 ### :gear: Compiling and running
 1. `cd Shooting-Game`
 2. `make`
-3. `./ShootingGame [number of AI enemies]`     
-*Note: If the argument is omitted, it will default to 4 AI enemies.*
+3. `./ShootingGame [number of AI enemies][Level]`     
+*Note: If the argument 2 is omitted, it will default to 4 AI enemies.*
+*Note: If the argument 3 is omitted, it will default to Level 3.*
 ## Windows
 1. Install Ubuntu. :sweat_smile:
 2. See above. 

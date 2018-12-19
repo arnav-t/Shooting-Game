@@ -59,10 +59,32 @@ int main(int argc, char *argv[])
 	int dead=0;
 	activeChars.push_back(p);
 	start = clock();
-	if(argc == 2)
+	if(argc >= 2)
 	{
 		stringstream inp(argv[1]);
 		inp>>aiPlayers;
+	}
+	if(argc >= 3)
+	{
+		stringstream inp(argv[2]);
+		int x;
+		inp>>x;
+		Mat temp;
+		switch(x)
+		{
+			case 1:
+			temp=imread("Level_1.jpg",1);
+			imwrite("map.jpg",temp);
+			break;
+			case 2:
+			temp=imread("Level_2.jpg",1);
+			imwrite("map.jpg",temp);
+			break;
+			default:
+			temp=imread("Level_3.jpg",1);
+			imwrite("map.jpg",temp);
+			break;	
+		}
 	}
 	for(int i=0; i<aiPlayers; ++i)
 		activeChars.push_back(new AI);
