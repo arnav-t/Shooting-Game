@@ -11,7 +11,7 @@ class Character
 		int type;
 		int health;
 		int aim;
-	        int score;
+	    int score;
 		Point location;
 		vector<Projectile *> activeProjectiles;
 	public:
@@ -35,6 +35,8 @@ class Character
 		{
 			aim = 180*theta/CV_PI;
 		}
+		
+		// Shoot Function Is Used To Shoot Projectile Or Blue Missile In The Game.
 		void shoot()
 		{
 			Projectile *newProjectile = new Projectile(location, aim + (rand()%spread)*pow(-1,rand()));
@@ -56,6 +58,8 @@ class Character
 				}
 			}
 		}
+		
+		// This Function Shows How Much Damage Happens By Subtracting hitDamage 10 From The Current Total Health.
 		void damage()
 		{
 			health -= hitDamage;

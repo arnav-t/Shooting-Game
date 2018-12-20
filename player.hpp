@@ -14,30 +14,35 @@ class Player : public Character
 		bool rKeyDown;
 	public:
 		Player()
-		{       score=0;
+		{     
+			score=0;
 			srand(time(NULL));
 			type = 0;
 			health = 100;
 			aim = rand()%360;
 			rKeyDown = false;
 			location = Point(rand()%img.cols,rand()%img.rows);
+			
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
 			draw();
 		}
+		
 		bool setKeyState(bool state)
 		{
 			rKeyDown = state;
 		}
+		
 		int keyInput(int keyCode)
 		{
-			if(keyCode == 27)
+			if(keyCode == 27)//  keyCode Of Escape is 27.
 				escpressed=1;
-			if(keyCode==112)
+				
+			if(keyCode==112)// KeyCode Of F1 Is 112.
 			    { pause+=1;
 			     pause%=2;	
 			     }	
-			if(keyCode == 100&&!pause)
+			if(keyCode == 100&&!pause)// KeyCode Of Numpad4 Is 100.
 			{
 				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)) < 128)
@@ -47,7 +52,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if((keyCode == 119 || rKeyDown)&&!pause)
+			else if((keyCode == 119 || rKeyDown)&&!pause)// keyCode Of F8 Is 119.
 			{
 				if(isValid(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)) < 128)
@@ -57,7 +62,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 97&&!pause)
+			else if(keyCode == 97&&!pause)// KeyCode Of Numpad1 Is 97.
 			{
 				if(isValid(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)) < 128)
@@ -67,7 +72,7 @@ class Player : public Character
 						draw();
 					}
 			}
-			else if(keyCode == 115&&!pause)
+			else if(keyCode == 115&&!pause)// KeyCode Of F4 Is 115.
 			{
 				if(isValid(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)) < 128)
@@ -87,6 +92,7 @@ class Player : public Character
 		{
 			return health > 0 ? 1:2;
 		}
+		// When You Killed Enemy You Get 15 points With This Function.
 		void givepoints()
 		{
 		  score+=15;
@@ -98,28 +104,33 @@ class Player : public Character
 
 double timeSinceFire = 0.0;
 
+// This Function Is Used To Show Reloading Bar Of The Fire On Bottom Left Corner.
 void drawRechargeRect()
 {
 	rectangle(img, Point(rBarCorner.x - bPadding, rBarCorner.y - bPadding), Point(rBarCorner.x + rBarSize.width + bPadding, rBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);
 	rectangle(img, rBarCorner, Point(rBarCorner.x + rBarSize.width*min(1.0,(double)timeSinceFire/fireRate), rBarCorner.y + rBarSize.height), Scalar(255,255,255), CV_FILLED);
 	imshow("Game",img);
 }
+
+
+// This Function Is Used To Show Health Bar Of The Player On Bottom Right Corner.
 void drawHealthRect(Player * p)
 {	
 	rectangle(img, Point(hBarCorner.x - bPadding, hBarCorner.y - bPadding), Point(hBarCorner.x + rBarSize.width + bPadding, hBarCorner.y + rBarSize.height + bPadding), Scalar(255,255,255), 1);//outerborder
 	rectangle(img, hBarCorner, Point(hBarCorner.x + rBarSize.width*min(1.0,(double)(p->health)/100), rBarCorner.y + rBarSize.height), Scalar(0,255,0), CV_FILLED);
 	imshow("Game",img);
+}
 
-		}
- void printscore(Player* p)
- { ostringstream a;
+
+// This Function Is Used To Show The Score On Top Left Of The Screen.
+void printscore(Player* p)
+{ 
+ ostringstream a;
    a<<p->score;
   string s=a.str();
    s="SCORE :"+s;
   
    putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
-  
-
 }
 
 

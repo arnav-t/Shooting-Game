@@ -53,10 +53,12 @@ int main()
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{        if(pause==1)
-	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
-	     imshow("Game", img);
-	     continue;
+	{       
+		 if(pause==1)// Pause Will Print On Screen With The Help Of "putText" Function.
+	    {
+	    	putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
+	     	imshow("Game", img);
+	    	continue;
 	    }
 		img = imread(IMAGE,1);
 		printscore(p);
@@ -64,9 +66,12 @@ int main()
 
 		double alpha = 0.5;
 		double beta = (double)1 - alpha;
-		if(dead == 1)
+		
+		if(dead == 1)// If You Dead "Game Over & You Loose" Will Print On The Screen. 
 		{
 			addWeighted(img, alpha, trans, beta, 0.0, img);
+			
+			// putText Function Is Used To Print A String.
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
 			putText(img, "You Lose", Point(90, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
 		}
@@ -99,9 +104,11 @@ int main()
 		drawRechargeRect();
     	drawHealthRect(p);
 	
-		if(dead == 0 && activeChars.size() == 1)
+		if(dead == 0 && activeChars.size() == 1)// If You Win "Game Over & You Win" Will Print On The Screen.
 		{
 			addWeighted(img, alpha, trans, beta, 0.0, img);
+			
+			// putText Function Is Used To Print A String.
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
 			putText(img, "You Win", Point(100, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);	
 		}
