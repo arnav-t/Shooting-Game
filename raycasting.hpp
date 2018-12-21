@@ -33,28 +33,28 @@ void castRay(Point source, float theta, int type)
 		if(imgv.at<uchar>(y,x) == 0)
 		{
 			r = 1 + (sqrt(pow(x-source.x,2)+pow(y-source.y,2))/100);
-			if(imgg.at<uchar>(y,x) < 128)
-			{
-				if(type == 0)
-					img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 255/pow(r,2)));
-				if(type == 1)
-					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 127/pow(r,2)));
-				if(type == 2)
-					img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 255/pow(r,2)));
-				if(type == 3)
+				if(imgg.at<uchar>(y,x) < 128)
 				{
-					img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 200/pow(r,2)));
-					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
+					if(type == 0)
+						img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 255/pow(r,2)));
+					if(type == 1)
+						img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 127/pow(r,2)));
+					if(type == 2)
+						img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 255/pow(r,2)));
+					if(type == 3)
+					{
+						img.at<Vec3b>(y,x)[1] = min(255, (int)(img.at<Vec3b>(y,x)[1] + 200/pow(r,2)));
+						img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
+					}
+					if(type==4)
+					{
+					    img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 200/pow(r,2)));
+						img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
+					   
+					}
 				}
-				if(type==4)
-				{
-				    img.at<Vec3b>(y,x)[0] = min(255, (int)(img.at<Vec3b>(y,x)[0] + 200/pow(r,2)));
-					img.at<Vec3b>(y,x)[2] = min(255, (int)(img.at<Vec3b>(y,x)[2] + 255/pow(r,2)));
-				   
-				}
-			}
-			else
-				break;
+				else
+					break;
 			imgv.at<uchar>(y,x) = 255;
 		}
 		x += dx;

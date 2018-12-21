@@ -38,18 +38,22 @@ double checkDelay(clock_t *start_ref)
 		return (ceil((double)16 - delay));
 }
 
-void displayhealthpickup(Point location,Player *p)
-{ if(abs(p->getLocation().x-location.x)+abs(p->getLocation().y-location.y)<=15)
-  {p->healthboost();
-  health_pickuptaken=1;
-  imshow("Game", img);
-  }
-  else
-  {rectangle(img,Point(location.x-5,location.y-5),Point(location.x+5,location.y+5),Scalar(255,0,255),CV_FILLED);
-   imgv = Scalar(0);
-  for(float t = 0; t < 360; t+=0.1)
+void displayhealthpickup(Point location,Player *p)// Health Pickup To restore Health.
+
+{
+	if(abs(p->getLocation().x-location.x)+abs(p->getLocation().y-location.y)<=15)
+	{	p->healthboost();
+	  	health_pickuptaken=1;
+	  	imshow("Game", img);
+	}
+  	else
+	{
+		rectangle(img,Point(location.x-5,location.y-5),Point(location.x+5,location.y+5),Scalar(255,0,255),CV_FILLED);
+   		imgv = Scalar(0);
+
+  		for(float t = 0; t < 360; t+=0.1)
 				castRay(location,t,4);
-  imshow("Game", img);
+  		imshow("Game", img);
   }
 }
 
@@ -74,14 +78,19 @@ int main(int argc, char *argv[])
 	Mat trans = img;
 	trans.setTo(Scalar(0, 0, 0));
 	health_location = Point(rand()%img.cols,rand()%img.rows);
+	// HealthPickup Will Spawn At Random Location.
     while(imgg.at<uchar>(health_location.y,health_location.x) >= 128)
 				health_location = Point(rand()%img.cols,rand()%img.rows);
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{        if(pause==1)
-	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
-	     imshow("Game", img);
-	     continue;
-	    }
+	{       
+		if(pause==1)
+		{
+			//Pause Will Be Displayed.
+			putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
+			imshow("Game", img);
+			continue;
+		}
+
 		img = imread(IMAGE,1);
 		printscore(p);
 		timeSinceFire = (dead==1)?fireRate:(double)(clock() - prevFire)/CLOCKS_PER_SEC;
@@ -91,11 +100,13 @@ int main(int argc, char *argv[])
 		if(dead == 1)
 		{
 			addWeighted(img, alpha, trans, beta, 0.0, img);
+			//After You Lose Text Will Be Displayed.
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
 			putText(img, "You Lose", Point(90, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 0, 255), 10, 2);
 		}
 		else if(p->gethealth()<=50&&!health_pickuptaken)
-		{displayhealthpickup(health_location,p);
+		{
+			displayhealthpickup(health_location,p);
 		}
 
 		for(int i=activeChars.size()-1;i>=0;--i)
@@ -131,6 +142,7 @@ int main(int argc, char *argv[])
 		if(dead == 0 && activeChars.size() == 1)
 		{
 			addWeighted(img, alpha, trans, beta, 0.0, img);
+			// After Winning Text Will Be Displayed.
 			putText(img, "Game Over", Point(40, 250), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
 			putText(img, "You Win", Point(100, 350), FONT_HERSHEY_SIMPLEX, 3, Scalar(0, 255, 0), 10, 2);
 		}

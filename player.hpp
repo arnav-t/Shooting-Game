@@ -14,13 +14,14 @@ class Player : public Character
 		bool rKeyDown;
 	public:
 		Player()
-		{       score=0;
+		{   score=0;
 			srand(time(NULL));
 			type = 0;
 			health = 100;
 			aim = rand()%360;
 			rKeyDown = false;
 			location = Point(rand()%img.cols,rand()%img.rows);
+			// Player Will Spawn At Random Place.
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
 			draw();
@@ -106,7 +107,7 @@ class Player : public Character
 
 double timeSinceFire = 0.0;
 
-void drawRechargeRect(double timeSinceFire)
+void drawRechargeRect(double timeSinceFire)//For Drawing Recharge Rectangle.
 {
 	// Border
 	if(timeSinceFire < 0.5)
@@ -120,7 +121,7 @@ void drawRechargeRect(double timeSinceFire)
 	// cvtColor(img, img,CV_HSV2BGR); // Would be called in drawHealthRect()
 	// imshow("Game",img); // Would be called in drawHealthRect()
 }
-void drawHealthRect(Player *p, double timeSinceDamage)
+void drawHealthRect(Player *p, double timeSinceDamage)// For Drawing Health Rectangle.
 {
 	// Border
 	if(timeSinceDamage <= 0.5)
@@ -132,7 +133,7 @@ void drawHealthRect(Player *p, double timeSinceDamage)
 	cvtColor(img, img,CV_HSV2BGR);
 	imshow("Game",img);
 }
-void printscore(Player *p)
+void printscore(Player *p)//For Printing Score.
 {
 	ostringstream a;
 	a << p->score;

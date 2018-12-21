@@ -23,7 +23,7 @@ class Projectile
 				castRay(location,t,3);
 			imshow("Game", img);
 		}
-		void draw()
+		void draw()// Draws Projectile.
 		{
 			imgv = Scalar(0);
 			for(float t = 0; t < 360; t+=0.1)
@@ -36,24 +36,24 @@ class Projectile
 		{
 			location.x += pStepX;
 			location.y += pStepY;
-			for(int i=0; i<charVec.size();++i)
-			{
-				if(i == creater)
+				for(int i=0; i<charVec.size();++i)
 				{
-					continue;
-				}
+					if(i == creater)
+					{
+						continue;
+					}
 
-				Point charLoc = charVec[i]->getLocation();
-				if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
-
-				{       charVec[creater]->givepoints();
-					 charVec[i]->damage();
-					location.x -= pStepX;
-					location.y -= pStepY;
-                                         return false;
+					Point charLoc = charVec[i]->getLocation();
+					if(abs(charLoc.x - location.x) + abs(charLoc.y - location.y) < 15)
+					{   
+						charVec[creater]->givepoints();
+						charVec[i]->damage();
+						location.x -= pStepX;
+						location.y -= pStepY;
+	                    return false;
+					}
+					
 				}
-				
-			}
 			if(isValid(location.y,location.x) && imgg.at<uchar>(location.y,location.x) < 128)
 			{
 				draw();

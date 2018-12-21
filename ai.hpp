@@ -25,7 +25,7 @@ class AI : public Character
 						target = activeChars[i];
 					else if(abs(location.x - activeChars[i]->getLocation().x) + abs(location.y - activeChars[i]->getLocation().y) < 
 						abs(location.x - target->getLocation().x) + abs(location.y - target->getLocation().y))
-						target = activeChars[i];
+							target = activeChars[i];
 				}
 			}
 		}
@@ -43,6 +43,7 @@ class AI : public Character
 			prevMove = clock();
 			prevFire = clock();
 			location = Point(rand()%img.cols,rand()%img.rows);
+			//bots Will Spawn At Random Place.
 			while(imgg.at<uchar>(location.y,location.x) >= 128)
 				location = Point(rand()%img.cols,rand()%img.rows);
 			target = NULL;
@@ -69,12 +70,14 @@ class AI : public Character
 			} 
 			if((double)(clock() - prevFire)/CLOCKS_PER_SEC >= fireRate)
 			{
-				if(target != NULL)	
+				if(target != NULL)
+				{	
 					if(abs(target->getLocation().x - location.x) + abs(target->getLocation().y - location.y) <= shootThreshold)
 					{	
-						shoot();
+						shoot();// Bot Will Shoot Player.
 						prevFire = clock();
 					}
+				}
 			}
 			if((double)(clock() - prevUpdate)/CLOCKS_PER_SEC >= aiUpdateRate)
 			{	
