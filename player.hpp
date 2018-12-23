@@ -46,8 +46,18 @@ class Player : public Character
 						location.y += step*cos(aim*CV_PI/180);
 						draw();
 					}
+					else if(imgg.at<uchar>(location.y ,location.x - step*cos(aim*CV_PI/180)) < 128)
+					{
+					    location.x -= step*cos(aim*CV_PI/180);
+						draw();
+					}
+					else if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x) < 128)
+					{   
+					   location.y += step*sin(aim*CV_PI/180);
+					   draw();
+					}
 			}
-			else if((keyCode == 119 || rKeyDown)&&!pause)
+			else if((keyCode == 119 || rKeyDown)&&!pause)//w
 			{
 				if(isValid(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)) < 128)
@@ -55,6 +65,16 @@ class Player : public Character
 						location.y += step*sin(aim*CV_PI/180);
 						location.x += step*cos(aim*CV_PI/180);
 						draw();
+					}
+					else if(imgg.at<uchar>(location.y ,location.x + step*cos(aim*CV_PI/180)) < 128)
+					{
+					    location.x += step*cos(aim*CV_PI/180);
+						draw();
+					}
+					else if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x) < 128)
+					{   
+					   location.y += step*sin(aim*CV_PI/180);
+					   draw();
 					}
 			}
 			else if(keyCode == 97&&!pause)
@@ -66,6 +86,16 @@ class Player : public Character
 						location.y -= step*cos(aim*CV_PI/180);
 						draw();
 					}
+					else if(imgg.at<uchar>(location.y ,location.x + step*cos(aim*CV_PI/180)) < 128)
+					{
+					    location.x += step*cos(aim*CV_PI/180);
+						draw();
+					}
+					else if(imgg.at<uchar>(location.y - step*sin(aim*CV_PI/180),location.x) < 128)
+					{   
+					   location.y -= step*sin(aim*CV_PI/180);
+					   draw();
+					}
 			}
 			else if(keyCode == 115&&!pause)
 			{
@@ -75,6 +105,16 @@ class Player : public Character
 						location.y -= step*sin(aim*CV_PI/180);
 						location.x -= step*cos(aim*CV_PI/180);
 						draw();
+					}
+					else if(imgg.at<uchar>(location.y ,location.x - step*cos(aim*CV_PI/180)) < 128)
+					{
+					    location.x -= step*cos(aim*CV_PI/180);
+						draw();
+					}
+					else if(imgg.at<uchar>(location.y - step*sin(aim*CV_PI/180),location.x) < 128)
+					{   
+					   location.y -= step*sin(aim*CV_PI/180);
+					   draw();
 					}
 			}
 			return 1;
