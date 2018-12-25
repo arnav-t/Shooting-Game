@@ -1,6 +1,7 @@
 #include "character.hpp"
 int escpressed=0;
 int pause=0;
+int stop=0;//pause but dosent print pause
 const int step = 4;
 const double fireRate = 0.5;
 const int bPadding = 2;
@@ -37,7 +38,7 @@ class Player : public Character
 			    { pause+=1;
 			     pause%=2;
 			     }
-			if(keyCode == 100&&!pause)
+			if(keyCode == 100&&!(pause||stop))
 			{
 				if(isValid(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*cos(aim*CV_PI/180),location.x - step*sin(aim*CV_PI/180)) < 128)
@@ -57,7 +58,7 @@ class Player : public Character
 					   draw();
 					}
 			}
-			else if((keyCode == 119 || rKeyDown)&&!pause)//w
+			else if((keyCode == 119 || rKeyDown)&&!(pause||stop))//w
 			{
 				if(isValid(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y + step*sin(aim*CV_PI/180),location.x + step*cos(aim*CV_PI/180)) < 128)
@@ -77,7 +78,7 @@ class Player : public Character
 					   draw();
 					}
 			}
-			else if(keyCode == 97&&!pause)
+			else if(keyCode == 97&&!(pause||stop))
 			{
 				if(isValid(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*cos(aim*CV_PI/180),location.x + step*sin(aim*CV_PI/180)) < 128)
@@ -97,7 +98,7 @@ class Player : public Character
 					   draw();
 					}
 			}
-			else if(keyCode == 115&&!pause)
+			else if(keyCode == 115&&!(pause||stop))
 			{
 				if(isValid(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)))
 					if(imgg.at<uchar>(location.y - step*sin(aim*CV_PI/180),location.x - step*cos(aim*CV_PI/180)) < 128)
@@ -139,8 +140,11 @@ class Player : public Character
 		{
 		   return health;
 		}
+		int getscore()
+		{
+		  return score;
+		}
 		friend void drawHealthRect(Player* p);
-		friend void printscore(Player* p);
 
 };
 
@@ -175,7 +179,7 @@ void drawHealthRect(Player *p, double timeSinceDamage)
 void printscore(Player *p)
 {
 	ostringstream a;
-	a << p->score;
+	a << p->getscore();
 	string s = a.str();
 	s = "SCORE: " + s;
 	putText(img,s,Point(5,20),FONT_HERSHEY_COMPLEX_SMALL,0.8,Scalar(0,0,255),1,CV_AA);
