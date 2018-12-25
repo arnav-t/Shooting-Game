@@ -95,6 +95,10 @@ class Character
 		{
 		   return 0;
 		}
+		virtual int getscore()
+		{
+		   return 0;
+		}
 };
 
 vector<Character *> activeChars;
