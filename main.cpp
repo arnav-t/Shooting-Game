@@ -77,10 +77,12 @@ int main(int argc, char *argv[])
     while(imgg.at<uchar>(health_location.y,health_location.x) >= 128)
 				health_location = Point(rand()%img.cols,rand()%img.rows);
 	while(p->keyInput(waitKey((int) delay)) && !escpressed)
-	{        if(pause==1)
-	    {putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
-	     imshow("Game", img);
-	     continue;
+	{   
+		if(pause==1)
+	    {	
+			putText(img, "pause", Point(150, 300), FONT_HERSHEY_SIMPLEX, 3, Scalar(255, 0, 0), 10, 2);
+	    	imshow("Game", img);
+			continue;
 	    }
 		img = imread(IMAGE,1);
 		printscore(p);
@@ -100,6 +102,20 @@ int main(int argc, char *argv[])
 
 		for(int i=activeChars.size()-1;i>=0;--i)
 		{
+			imgg = imread(IMAGE, 0);
+			for(int j=activeChars.size()-1; j>=0; --j)
+			{
+				if(i!=j)
+				{
+					Mat temp;
+					cvtColor(imgg, temp, COLOR_GRAY2BGR);
+
+					circle(temp, activeChars[j]->getLocation(), 7, Scalar(255, 255, 255), CV_FILLED);
+					
+					cvtColor(temp, imgg, COLOR_BGR2GRAY);
+				}
+			}
+
 			if(activeChars[i]->checkLife() == 0)
 			{
 				Character *tempChar = activeChars[i];
